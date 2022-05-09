@@ -1,5 +1,6 @@
 <template>
-  <v-app>
+
+  <v-app >
     <v-main>
       <router-view></router-view>
     </v-main>
@@ -17,9 +18,23 @@ export default {
     // AppBar,
     // LoginPage,
   },
+  computed: {
+    currentUser() {
 
+     let userLogin= null;
+     try {
+      userLogin= this.$store.state.auth.user.user
+     } catch (error) {
+        console.log("userLogin : ",userLogin)
+     }
+     console.log("userLogin : ",userLogin)
+    //  this.user=user;
+    return userLogin;
+    }
+  },
   data: () => ({
     //
+    user:null,
   }),
 }
 </script>

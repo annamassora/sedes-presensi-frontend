@@ -32,12 +32,15 @@ export default {
   methods: {
      handleLogin() {
       this.loading = true;
+      this.$store.dispatch("auth/logout")
       this.$store.dispatch("auth/login", this.user).then(
         response => {
           console.log("response ", response)
-          if(response.code==200)
+          if(response.status==200)
           {
-            this.$router.push("/profile");
+            this.$router.push("/main");
+            console.log(localStorage.getItem('user'));
+            this.loading = false;
           }
           else{
             this.$swal(
@@ -46,6 +49,7 @@ export default {
               icon: 'error',
               confirmButtonText: 'ok'
             })
+             this.loading = false;
           }
         },
         

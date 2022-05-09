@@ -2,6 +2,7 @@ import axios from 'axios';
 const API_URL = 'http://localhost:5000/api/';
 class AuthService {
   login(user) {
+    
     return axios
       .post(API_URL + 'login', {},{headers: {
         "Content-Type": "application/json",
@@ -9,8 +10,8 @@ class AuthService {
       }})
       .then(response => {
           console.log(response.data)
-        if (response.data.accessToken) {
-          localStorage.setItem('user', JSON.stringify(response.data));
+        if (response.data.access) {
+          localStorage.setItem('user', JSON.stringify(response.data.access));
           return response.data
         }
         return response.data;

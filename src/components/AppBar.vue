@@ -14,4 +14,12 @@
         </template>
       </v-app-bar>
 </template>
+<script>
+export default {
+  name: 'app-login',
+  // props
+  }
 
+
+
+</script>
