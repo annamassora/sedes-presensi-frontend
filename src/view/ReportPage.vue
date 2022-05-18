@@ -4,78 +4,63 @@
     <v-table
      theme="dark"
      fixed-header
-     height="300px"
+     height="auto"
     >
         <thead>
           <tr>
             <th class="text-left">
-              Name
+              Check-In
             </th>
             <th class="text-left">
-              Calories
+              Lokasi
+            </th>
+            <th class="text-left">
+              Check-Out
             </th>
           </tr>
         </thead>
         <tbody>
           <tr
-            v-for="item in desserts"
+            v-for="item in sorted_attendance"
             :key="item.name"
           >
-            <td>{{ item.name }}</td>
-            <td>{{ item.calories }}</td>
+            <td>{{ item.check_in }}</td>
+            <td>{{ item.location }}</td>
+            <td>{{ item.check_out }}</td>
           </tr>
         </tbody>
     </v-table>
 </v-container>
 </template>
+
 <script>
+  import RequestService from '../service/request.service';
   export default {
     data () {
       return {
-        desserts: [
-          {
-            name: 'Frozen Yogurt',
-            calories: 159,
-          },
-          {
-            name: 'Ice cream sandwich',
-            calories: 237,
-          },
-          {
-            name: 'Eclair',
-            calories: 262,
-          },
-          {
-            name: 'Cupcake',
-            calories: 305,
-          },
-          {
-            name: 'Gingerbread',
-            calories: 356,
-          },
-          {
-            name: 'Jelly bean',
-            calories: 375,
-          },
-          {
-            name: 'Lollipop',
-            calories: 392,
-          },
-          {
-            name: 'Honeycomb',
-            calories: 408,
-          },
-          {
-            name: 'Donut',
-            calories: 452,
-          },
-          {
-            name: 'KitKat',
-            calories: 518,
-          },
+        attend: [
+          // {
+          //   Tanggal: 'Frozen Yogurt',
+          //   Check_In: 159,
+          //   Lokasi: 'Frozen Yogurt',
+          //   Check_Out: 159,
+          // },
+
         ],
       }
     },
+    created ()  {
+      console.log("RequestService.report()")
+      RequestService.report().then(result => this.attend = result)
+      console.log("attend",this.attend)
+    },
+    computed : {
+      sorted_attendance(){
+        console.log(this.attend)
+          return  ((this.attend.check_in!=null) ? this.attend.check_in.slice().sort() : this.attend);
+      }
+  }
+
   }
 </script>
 <!-- <script>

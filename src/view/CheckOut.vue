@@ -24,7 +24,7 @@ export default {
       alertDisplay() {
         this.$swal({
           title: 'Yakin Check Out?',
-          text: 'Akses anda di area Sekolah akan ditutup',
+          text: 'Akses anda di area sekolah akan ditutup',
           type: 'warning',
           cancelButtonText: 'Kembali',
           confirmButtonText: 'Check Out!',
@@ -34,7 +34,7 @@ export default {
         }).then((result) => {
             this.$router.replace("/main");
           if(result.value) {
-            this.$swal('Check Out', 'Semoga sampai tujuan dengan selamat :)', 'success')
+            this.$swal('Check Out', 'Semoga sampai tujuan dengan selamat', 'success')
           } else {
             this.$swal('Cancelled', 'Anda masih memiliki akses di area sekolah', 'info')
           }

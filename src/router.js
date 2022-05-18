@@ -1,20 +1,24 @@
 import { createWebHistory, createRouter } from "vue-router";
-import LoginPage from './view/LoginPage.vue'
+import loginPage from './view/LoginPage.vue'
 import profilePage from './view/ProfilePage.vue'
-import PresensiPage from './view/PresensiPage.vue'
+import checkinPage from './view/CheckIn.vue'
+import checkoutPage from './view/CheckOut.vue'
+import reportPage from './view/ReportPage.vue'
+import dashboardPage from './view/DashboardPage.vue'
 // lazy-loaded
 const MainMenu = () => import("./view/MainMenu.vue")
 const routes = [
     { path: '/', redirect: '/login'},
-    { path: '/login', name: "login", component: LoginPage },
+    { path: '/login', name: "login", component: loginPage },
     { path: '/main', name: "main", component: MainMenu,
     children: [
       // UserHome will be rendered inside User's <router-view>
       // when /users/:username is matched
-      { path: '', component: PresensiPage },
+      { path: '', component: dashboardPage, name:"Dashboard" },
+      { path: 'checkin', component: checkinPage, name:"Check-In"  },
+      { path: 'checkout', component: checkoutPage, name:"Check-Out"  },
+      { path: 'report', component: reportPage, name:"Report"  },
 
-      // UserProfile will be rendered inside User's <router-view>
-      // when /users/:username/profile is matched
       { path: 'profile',  name: "profile", component: profilePage },
 
       // UserPosts will be rendered inside User's <router-view>

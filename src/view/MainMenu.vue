@@ -2,55 +2,64 @@
     <v-layout>
       <!-- <v-system-bar color="deep-purple darken-3"></v-system-bar> -->
 
-      <v-app-bar
-        color="primary"
-        prominent
-      >
-        <v-app-bar-nav-icon variant="text" v-if="displayMobile==true" @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
-        <v-toolbar-title>Welcome</v-toolbar-title>
+      <AppBar :title="routeName" :displayMobile="displayMobile"></AppBar>
 
-        <v-spacer></v-spacer>
-
-      </v-app-bar>
-
+<!-- DISPLAY-MOBILE -->
       <v-navigation-drawer
         v-if="displayMobile"
-        v-model="drawer"
         left
+        v-model="drawer"
         temprorary
       >
-      <v-list density="compact" nav>
-          <v-list-item
-            prepend-avatar="https://randomuser.me/api/portraits/women/85.jpg"
-            :title="user.username"
-            :subtitle="user.indentifier"
-          ></v-list-item>
-          <v-divider></v-divider>
-          <v-list-item prepend-icon="mdi-home-city" title="Home" value="home" @click="this.$router.push('/main')"></v-list-item>
-          <v-list-item prepend-icon="mdi-account" title="My Account" value="account" @click="this.$router.push('/main/presensi')"></v-list-item>
+      <template #append>
+        <v-list nav>
           <v-list-item prepend-icon="mdi-account-group-outline" title="logout" @click="handleLogout()" value="logout"></v-list-item>
         </v-list>
-      </v-navigation-drawer>
-      <v-navigation-drawer
-        v-else
-        v-model="drawer"
-        left
-        permanent
-      >
-        <v-list density="compact" nav>
+      </template>
+      <v-list density="compact" nav>
           <v-list-item
-            prepend-avatar="https://randomuser.me/api/portraits/women/85.jpg"
+            prepend-icon="mdi-account-circle-outline"
             :title="user.username"
             :subtitle="user.indentifier"
           ></v-list-item>
-          <v-divider></v-divider>
-          <v-list-item prepend-icon="mdi-home-city" title="Presensi" value="Presensi" @click="this.$router.push('/main')"></v-list-item>
-          <v-list-item prepend-icon="mdi-account" title="My Account" value="account" @click="this.$router.push('/main')"></v-list-item>
-          <v-list-item prepend-icon="mdi-logout-variant" title="logout" @click="handleLogout()" value="logout"></v-list-item>
+          <v-list nav>
+            <v-list-item prepend-icon="mdi-home-city" title="Dashboard" value="Dashboard" @click="this.$router.push('/main')"></v-list-item>
+            <v-list-item prepend-icon="mdi-clipboard-account" title="Report" value="account" @click="this.$router.push('/main/report')"></v-list-item>
+          </v-list>
         </v-list>
       </v-navigation-drawer>
 
-      <v-main style="height: 100vh">
+<!-- DISPLAY-WEBSITE -->
+      <v-navigation-drawer
+        v-else
+        left
+        permanent
+        priority="0"
+      >
+      <template #append>
+        <v-list nav>
+          <v-list-item prepend-icon="mdi-account-group-outline" title="logout" @click="handleLogout()" value="logout"></v-list-item>
+        </v-list>
+      </template>
+      <template #prepend>
+        <v-list nav>
+          <div style="text-align: center; margin: 30px 10px;">
+            <v-icon size= 65>
+            mdi-account-circle-outline <!--ganti avatar-->
+            </v-icon>
+            <p style="margin-top: 10px;">
+              {{user.username}}
+            </p>
+          </div>
+        </v-list>
+      </template>
+        <v-list nav>
+          <v-list-item prepend-icon="mdi-home-city" title="Dashboard" value="Dashboard" @click="this.$router.push('/main')"></v-list-item>
+          <v-list-item prepend-icon="mdi-clipboard-account" title="Report" value="account" @click="this.$router.push('/main/report')"></v-list-item>
+        </v-list>
+      </v-navigation-drawer>
+
+      <v-main style="height:100vh">
         <router-view></router-view>
       </v-main>
     </v-layout>
@@ -58,7 +67,7 @@
 </template>
 
 <script>
-// import AppBar from './AppBar.vue'
+import AppBar from '../components/AppBar.vue'
 import { useDisplay } from 'vuetify'
 export default {
   data() {
@@ -70,7 +79,16 @@ export default {
       loading : false,
     }
   },
+  computed:{
+     routeName(){
+       return this.$route.name
+    },
+  },
+  components: {
+    AppBar,
+  },
   created() {
+    console.log("this.$route.name",this.$router.currentRoute.name)
     this.user= JSON.parse(localStorage.getItem('user')).user;
     console.log("this.user : ",this.user);
     const display = useDisplay();
@@ -92,6 +110,7 @@ export default {
         this.drawer = false
       },
     },
+  
 }
 
 </script>

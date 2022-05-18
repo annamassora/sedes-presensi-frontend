@@ -1,22 +1,20 @@
 <template>
-      <v-app-bar
-        color="primary"
-        floating="true"
-      >
-        <template v-slot:prepend>
-          <v-app-bar-nav-icon></v-app-bar-nav-icon>
-        </template>
+      
+      <v-app-bar color="#00695C" priority="1">
+        <v-app-bar-nav-icon style="color:white" variant="text" v-if="displayMobile==true" @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
+        <v-toolbar-title style="color:white" >{{title}}</v-toolbar-title>
 
-        <v-app-bar-title>Photos</v-app-bar-title>
+        <v-spacer></v-spacer>
 
-        <template v-slot:append>
-          <v-btn icon="mdi-dots-vertical"></v-btn>
-        </template>
       </v-app-bar>
 </template>
 <script>
+
 export default {
-  name: 'app-login',
+    props: {
+    title: String,
+    displayMobile:Boolean,
+  }
   // props
   }
 

@@ -16,6 +16,7 @@
     "vue": "^3.2.13",
     "vue-router": "^4.0.14",
     "vue-sweetalert2": "^5.0.2",
+    "vue3-carousel": "^0.1.40",
     "vuetify": "npm:@vuetify/nightly@next",
     "vuex": "^4.0.2",
     "webfontloader": "^1.0.0"
