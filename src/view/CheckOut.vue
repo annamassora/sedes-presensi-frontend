@@ -24,7 +24,7 @@ export default {
       alertDisplay() {
         this.$swal({
           title: 'Yakin Check Out?',
-          text: 'Akses anda di area sekolah akan ditutup',
+          text: 'Akses anda di area s ekolah akan ditutup',
           type: 'warning',
           cancelButtonText: 'Kembali',
           confirmButtonText: 'Check Out!',

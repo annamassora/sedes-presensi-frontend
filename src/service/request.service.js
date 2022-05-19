@@ -17,6 +17,23 @@ class RequestService {
         return response.data;
       });
   }
+
+  last_checkin() {
+    const token=JSON.parse(localStorage.getItem('user')).token
+    return axios
+      .get(API_URL + 'last_checkin',{headers: {
+        "Content-Type": "multipart/form-data",
+        "token": token,
+      }})
+      .then(response => {
+        console.log(response.data.attendance)
+        if (response.data.status!=200) {
+          return "nodata"
+        }
+        return response.data.attendance;
+      });
+  }
+  
   report() {
     const token=JSON.parse(localStorage.getItem('user')).token
     return axios

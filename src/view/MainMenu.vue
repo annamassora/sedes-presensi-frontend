@@ -34,6 +34,7 @@
         v-else
         left
         permanent
+        style="position: fixed; height:100%"
         priority="0"
       >
       <template #append>
@@ -59,7 +60,7 @@
         </v-list>
       </v-navigation-drawer>
 
-      <v-main style="height:100vh">
+      <v-main >
         <router-view></router-view>
       </v-main>
     </v-layout>
@@ -116,4 +117,5 @@ export default {
 </script>
 
 <style lang="css" scoped>
+
 </style>
