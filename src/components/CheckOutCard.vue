@@ -17,22 +17,56 @@
             </v-card-header>
     
             <v-card-actions>
-              <v-btn variant="outlined" text color="cyan accent-4">
+              <v-btn variant="outlined" text color="cyan accent-4" @click="checkOut">
                 Check Out
               </v-btn>
             </v-card-actions>
         </v-card>
 </template>
 <script>
+import RequestService from '../service/request.service'
 export default {
     props: {
     location: String,
-    datetime: String
+    datetime: String,
+    id: Number
   },
+  methods:
+  {
+    checkOut()
+    {
+      console.log("click")
+        this.$swal({
+          title: 'Yakin Check Out? ',
+          text: 'Akses anda di area sekolah akan ditutup',
+          type: 'warning',
+          cancelButtonText: 'Kembali',
+          confirmButtonText: 'Check Out!',
+          showCancelButton: true,
+          showCloseButton: true,
+          showLoaderOnConfirm: true,
+        }).then((result) => {
+          if(result.value) {
+            RequestService.check_out(this.id).then(result => this.attend = result).then(result=>{
+              if(result.message=="success")
+              {
+                 this.$parent.dataCards = this.$parent.dataCards.filter((item) => item.id !== this.id)
+              }
+              else{
+                 this.$swal('Check Out Gagal', 'Silahkan coba lagi', 'error')
+              }
+              })
+            this.$swal('Check Out', 'Semoga sampai tujuan dengan selamat', 'success')
+            console.log("RequestService.check_out", this.result)
+            console.log("attend",this.attend)
+          } else {
+            this.$swal('Cancelled', 'Anda masih memiliki akses di area sekolah', 'info')
+          }
+        })
+    }
+  }
   // props
 }
   
-
-
 
 </script>

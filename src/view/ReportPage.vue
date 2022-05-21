@@ -21,7 +21,7 @@
         </thead>
         <tbody>
           <tr
-            v-for="item in sorted_attendance"
+            v-for="item in attend"
             :key="item.name"
           >
             <td>{{ item.check_in }}</td>

@@ -50,7 +50,7 @@
       <v-subheader key="Last Check-in" inset>Last Check-in</v-subheader>
       <v-divider key="1" inset></v-divider>
       <div  v-for="dataCard in dataCards" :key="dataCard.id">
-        <CheckOutCard :location="dataCard.location" :datetime="dataCard.checkin" :key="dataCard.id"></CheckOutCard>
+        <CheckOutCard :location="dataCard.location" :datetime="dataCard.check_in" :id="dataCard.id"></CheckOutCard>
       </div>
 
   </div>
@@ -58,7 +58,7 @@
 
 <script>
 import CheckOutCard from '../components/CheckOutCard.vue'
-import RequestService from '../service/request.service';
+import RequestService from '../service/request.service'
 import 'vue3-carousel/dist/carousel.css';
 import { Carousel, Slide } from 'vue3-carousel';
 export default {
@@ -70,9 +70,9 @@ export default {
     }
   },
   created(){
-      console.log("RequestService.lastcheckin()")
+      console.log("RequestService.last_checkin()")
       RequestService.last_checkin().then(result => this.dataCards = result)
-      
+ 
   },
   components: {
     Carousel,
