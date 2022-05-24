@@ -1,6 +1,5 @@
 <template>
-<v-container>
-    <AppBar title="Rekapan Presensi"></AppBar>
+  <Datepicker v-model="month" monthPicker autoApply :closeOnAutoApply="true" @update:modelValue="getMonth()" style="margin: 1rem; margin-right:50vw;" />
     <v-table
      theme="dark"
      fixed-header
@@ -8,8 +7,12 @@
     >
         <thead>
           <tr>
+            
             <th class="text-left">
               Check-In
+            </th>
+            <th class="text-left">
+              Suhu
             </th>
             <th class="text-left">
               Lokasi
@@ -25,33 +28,42 @@
             :key="item.name"
           >
             <td>{{ item.check_in }}</td>
+            <td>{{ item.temperature }}</td>
             <td>{{ item.location }}</td>
             <td>{{ item.check_out }}</td>
           </tr>
         </tbody>
     </v-table>
-</v-container>
 </template>
 
 <script>
+  import { ref } from 'vue';
+  import Datepicker from '@vuepic/vue-datepicker';
+  import '@vuepic/vue-datepicker/dist/main.css'
   import RequestService from '../service/request.service';
   export default {
     data () {
       return {
         attend: [
-          // {
-          //   Tanggal: 'Frozen Yogurt',
-          //   Check_In: 159,
-          //   Lokasi: 'Frozen Yogurt',
-          //   Check_Out: 159,
-          // },
 
         ],
+        month : ref({ 
+            month: new Date().getMonth(),
+            year: new Date().getFullYear()
+        })
       }
+    },
+    components: { Datepicker },
+    methods:{
+        getMonth()
+        {
+          console.log("datepicker: ", this.month);
+          RequestService.report(this.month.year, this.month.month).then(result => this.attend = result)
+        }
     },
     created ()  {
       console.log("RequestService.report()")
-      RequestService.report().then(result => this.attend = result)
+      RequestService.report(this.month.year, this.month.month).then(result => this.attend = result)
       console.log("attend",this.attend)
     },
     computed : {
@@ -59,20 +71,11 @@
         console.log(this.attend)
           return  ((this.attend.check_in!=null) ? this.attend.check_in.slice().sort() : this.attend);
       }
-  }
+    }
 
   }
 </script>
-<!-- <script>
-// import AppBar from './AppBar.vue'
-    // export default {
-    //   computed: {
-    //   },
-    //   mounted() {
-    //   }
-    // }
 
-</script> -->
 <style 
 lang="css" scoped
 ></style>

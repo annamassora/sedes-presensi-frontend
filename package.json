@@ -9,6 +9,7 @@
   },
   "dependencies": {
     "@mdi/font": "5.9.55",
+    "@vuepic/vue-datepicker": "^3.2.1",
     "axios": "^0.27.2",
     "core-js": "^3.8.3",
     "qrcode-reader-vue3": "^3.1.2",
@@ -17,6 +18,7 @@
     "vue-router": "^4.0.14",
     "vue-sweetalert2": "^5.0.2",
     "vue3-carousel": "^0.1.40",
+    "vuejs3-datepicker": "^1.0.6",
     "vuetify": "npm:@vuetify/nightly@next",
     "vuex": "^4.0.2",
     "webfontloader": "^1.0.0"

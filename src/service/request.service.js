@@ -51,10 +51,15 @@ class RequestService {
       });
   }
 
-  report() {
+  report(year, month) {
+    console.log(year,month);
+    // const params = {
+    //   year: year,
+    //   month: month
+    // };
     const token=JSON.parse(localStorage.getItem('user')).token
     return axios
-      .get(API_URL + 'report', {headers: {
+      .get(API_URL + 'report?year='+year+"&month="+month, {headers: {
         "Content-Type": "multipart/form-data",
         "token": token,
       }})
