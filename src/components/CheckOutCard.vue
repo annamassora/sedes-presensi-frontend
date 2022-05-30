@@ -47,8 +47,9 @@ export default {
           showLoaderOnConfirm: true,
         }).then((result) => {
           if(result.value) {
-            RequestService.check_out(this.id).then(result => this.attend = result).then(result=>{
-              if(result.message=="success")
+            RequestService.check_out(this.id).then((res)=>{
+              console.log("res :", res)
+              if(res.status==200)
               {
                  this.$parent.dataCards = this.$parent.dataCards.filter((item) => item.id !== this.id)
               }
@@ -57,8 +58,7 @@ export default {
               }
               })
             this.$swal('Check Out', 'Semoga sampai tujuan dengan selamat', 'success')
-            console.log("RequestService.check_out", this.result)
-            console.log("attend",this.attend)
+            console.log("RequestService.check_out", result)
           } else {
             this.$swal('Cancelled', 'Anda masih memiliki akses di area sekolah', 'info')
           }

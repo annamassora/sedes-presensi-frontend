@@ -42,6 +42,7 @@
   import '@vuepic/vue-datepicker/dist/main.css'
   import RequestService from '../service/request.service';
   export default {
+    props: {'nisn':String},
     data () {
       return {
         attend: [
@@ -58,12 +59,12 @@
         getMonth()
         {
           console.log("datepicker: ", this.month);
-          RequestService.report(this.month.year, this.month.month).then(result => this.attend = result)
+          RequestService.studentdetail(this.month.year, this.month.month).then(result => this.attend = result)
         }
     },
     created ()  {
-      console.log("RequestService.report()")
-      RequestService.report(this.month.year, this.month.month).then(result => this.attend = result)
+      console.log("RequestService.studentdetail()")
+      RequestService.studentdetail(this.nisn, this.month.year, this.month.month).then(result => this.attend = result)
       console.log("attend",this.attend)
     },
     computed : {

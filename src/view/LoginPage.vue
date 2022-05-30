@@ -29,6 +29,17 @@ export default {
   },
   methods: {
      handleLogin() {
+      if(this.user.username==''&&this.user.password=='')
+      {
+         this.$swal(
+            { title: 'Error!',
+              text: 'Lengkapi form terlebih dahulu',
+              icon: 'error',
+              confirmButtonText: 'ok'
+            })
+      }
+      else
+      {
       this.loading = true;
       this.$store.dispatch("auth/logout")
       this.$store.dispatch("auth/login", this.user).then(
@@ -36,9 +47,24 @@ export default {
           console.log("response ", response)
           if(response.status==200)
           {
-            this.$router.replace("/main");
-            console.log(localStorage.getItem('user'));
-            this.loading = false;
+            if(response.access.user.role==0)
+            {
+              this.$router.replace("/main");
+              console.log(localStorage.getItem('user'));
+              this.loading = false;
+            }
+            if(response.access.user.role==1)
+            {
+              this.$router.replace("/main");
+              console.log(localStorage.getItem('user'));
+              this.loading = false;
+            }if(response.access.user.role==2)
+            {
+              this.$router.replace("/main");
+              console.log(localStorage.getItem('user'));
+              this.loading = false;
+            }
+            
           }
           else{
             this.$swal(
@@ -52,8 +78,9 @@ export default {
         },
         
       );
+      }
+     
     },
-
   // async  login() {
   //     // const password="12345"
   //     // const username="adfadsf"

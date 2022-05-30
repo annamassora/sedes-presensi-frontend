@@ -1,7 +1,7 @@
 <template>
       
       <v-app-bar color="#00695C" priority="1">
-        <v-app-bar-nav-icon style="color:white" variant="text" v-if="displayMobile==true" @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
+        <v-app-bar-nav-icon style="color:white" variant="text" v-if="displayMobile==true" @click.stop="this.$parent.drawer = !this.$parent.drawer "></v-app-bar-nav-icon>
         <v-toolbar-title style="color:white" >{{title}}</v-toolbar-title>
 
         <v-spacer></v-spacer>
@@ -13,7 +13,7 @@
 export default {
     props: {
     title: String,
-    displayMobile:Boolean,
+    displayMobile: Boolean,
   }
   // props
   }

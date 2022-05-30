@@ -67,7 +67,6 @@ export default {
       result: '',
       image: "/assets/web_sedes.png",
       dataCards: [],
-      
     }
   },
   created(){
