@@ -1,5 +1,6 @@
 import axios from 'axios';
 const API_URL = 'http://localhost:5000/api/';
+import router from "../router.js";
 class RequestService {
   attendance(temperature, qrString) {
     const reqData = { temperature: temperature, qrString:qrString };
@@ -14,7 +15,14 @@ class RequestService {
         if (response.data.access) {
           return response.data
         }
-        return response.data;
+        else if(response.data.status == 401) {
+          localStorage.removeItem('user');
+          router.push(`/login`);
+          return response.data;
+        }
+        else{
+          return response.data;
+        }
       });
   }
 
@@ -27,10 +35,17 @@ class RequestService {
       }})
       .then(response => {
           console.log("last_checkin",response.data)
-        if (response.data.access) {
+        if (response.data.status==200) {
           return response.data
         }
-        return response.data.attendance;
+        else if(response.data.status == 401) {
+          localStorage.removeItem('user');
+          router.push(`/login`);
+          return response.data;
+        }
+        else{
+          return response.data;
+        }
       });
   }
 
@@ -44,8 +59,19 @@ class RequestService {
       }})
       .then(response => {
         console.log("check_out",response.data)
-        return response.data;
-      });
+        if (response.data.status==200) {
+          return response.data
+        }
+        else if(response.data.status == 401) {
+          localStorage.removeItem('user');
+          router.push(`/login`);
+          return response.data;
+        }
+        else{
+          return response.data;
+        }
+      }
+      );
   }
 
   report(year, month) {
@@ -57,11 +83,17 @@ class RequestService {
         "token": token,
       }})
       .then(response => {
-          console.log(response.data.attendance)
-        if (response.data.access) {
+        if (response.data.status==200) {
           return response.data
         }
-        return response.data.attendance;
+        else if(response.data.status == 401) {
+          localStorage.removeItem('user');
+          router.push(`/login`);
+          return response.data;
+        }
+        else{
+          return response.data;
+        }
       });
   }
 
@@ -77,7 +109,14 @@ class RequestService {
         if (response.data.access) {
           return response.data
         }
-        return response.data;
+        else if(response.data.status == 401) {
+          localStorage.removeItem('user');
+          router.push(`/login`);
+          return response.data;
+        }
+        else{
+          return response.data;
+        }
       });
   }
   studentlist() {
@@ -88,11 +127,17 @@ class RequestService {
         "token": token,
       }})
       .then(response => {
-          console.log(response.data)
-        if (response.data.access) {
+        if (response.data.status==200) {
           return response.data
         }
-        return response.data;
+        else if(response.data.status == 401) {
+          localStorage.removeItem('user');
+          router.push(`/login`);
+          return response.data;
+        }
+        else{
+          return response.data;
+        }
       });
   }
   teacherdetail(nign, year, month) {
@@ -104,11 +149,17 @@ class RequestService {
         "token": token,
       }})
       .then(response => {
-          console.log(response.data.attendance)
-        if (response.data.access) {
+        if (response.data.status==200) {
           return response.data
         }
-        return response.data.attendance;
+        else if(response.data.status == 401) {
+          localStorage.removeItem('user');
+          router.push(`/login`);
+          return response.data;
+        }
+        else{
+          return response.data;
+        }
       });
   }
   studentdetail(nisn, year, month) {
@@ -120,11 +171,17 @@ class RequestService {
         "token": token,
       }})
       .then(response => {
-          console.log(response.data.attendance)
-        if (response.data.access) {
+        if (response.data.status==200) {
           return response.data
         }
-        return response.data.attendance;
+        else if(response.data.status == 401) {
+          localStorage.removeItem('user');
+          router.push(`/login`);
+          return response.data;
+        }
+        else{
+          return response.data;
+        }
       });
   }
   getQrCode() {
@@ -135,8 +192,18 @@ class RequestService {
         "token": token,
       }})
       .then(response => {
-        console.log(response.data)
-        return response.data.qrList;
+        if (response.data.status==200) {
+          console.log(response.data)
+          return response.data
+        }
+        else if(response.data.status == 401) {
+          localStorage.removeItem('user');
+          router.push(`/login`);
+          return response.data;
+        }
+        else{
+          return response.data;
+        }
       });
   }
   createQrcode(location) {
@@ -148,8 +215,17 @@ class RequestService {
         "token": token,
       }})
       .then(response => {
-        console.log(response.data.qrString)
-        return response.data.qrString;
+        if (response.data.status==200) {
+          return response.data
+        }
+        else if(response.data.status == 401) {
+          localStorage.removeItem('user');
+          router.push(`/login`);
+          return response.data;
+        }
+        else{
+          return response.data;
+        }
       });
   }
   deleteQrCode(id) {
@@ -161,8 +237,17 @@ class RequestService {
         "token": token,
       }})
       .then(response => {
-        console.log(response.data)
-        return response.data;
+        if (response.data.status==200) {
+          return response.data
+        }
+        else if(response.data.status == 401) {
+          localStorage.removeItem('user');
+          router.push(`/login`);
+          return response.data;
+        }
+        else{
+          return response.data;
+        }
       });
   }
   addTeacher(username, datebirth, identifier) {
@@ -174,8 +259,17 @@ class RequestService {
         "token": token,
       }})
       .then(response => {
-        console.log(response.data)
-        return response.data;
+        if (response.data.status==200) {
+          return response.data
+        }
+        else if(response.data.status == 401) {
+          localStorage.removeItem('user');
+          router.push(`/login`);
+          return response.data;
+        }
+        else{
+          return response.data;
+        }
       });
   }
   addStudent(username, datebirth, identifier) {
@@ -187,8 +281,17 @@ class RequestService {
         "token": token,
       }})
       .then(response => {
-        console.log(response.data)
-        return response.data;
+        if (response.data.status==200) {
+          return response.data
+        }
+        else if(response.data.status == 401) {
+          localStorage.removeItem('user');
+          router.push(`/login`);
+          return response.data;
+        }
+        else{
+          return response.data;
+        }
       });
   }
   deleteTeacher(id) {
@@ -200,8 +303,17 @@ class RequestService {
         "token": token,
       }})
       .then(response => {
-        console.log(response.data)
-        return response.data;
+        if (response.data.status==200) {
+          return response.data
+        }
+        else if(response.data.status == 401) {
+          localStorage.removeItem('user');
+          router.push(`/login`);
+          return response.data;
+        }
+        else{
+          return response.data;
+        }
       });
   }
   deleteStudent(id) {
@@ -213,10 +325,62 @@ class RequestService {
         "token": token,
       }})
       .then(response => {
-        console.log(response.data)
-        return response.data;
+        if (response.data.status==200) {
+          return response.data
+        }
+        else if(response.data.status == 401) {
+          localStorage.removeItem('user');
+          router.push(`/login`);
+          return response.data;
+        }
+        else{
+          return response.data;
+        }
       });
-    }
+  }
+  downloadTeacherReport() {
+    const token=JSON.parse(localStorage.getItem('user')).token
+    return axios
+      .get(API_URL + 'downloadTeacherReport', {headers: {
+        "Content-Type": "multipart/form-data",
+        "token": token,
+      }})
+      .then(response => {
+          console.log(response.status)
+          if (response.data.status==200) {
+            return response.data
+          }
+          else if(response.data.status == 401) {
+            localStorage.removeItem('user');
+            router.push(`/login`);
+            return response.data;
+          }
+          else{
+            return response.data;
+          }
+      });
+  }
+  downloadStudentReport() {
+    const token=JSON.parse(localStorage.getItem('user')).token
+    return axios
+      .get(API_URL + 'downloadStudentReport', {headers: {
+        "Content-Type": "multipart/form-data",
+        "token": token,
+      }})
+      .then(response => {
+        if (response.data.status==200) {
+          return response.data
+        }
+        else if(response.data.status == 401) {
+          localStorage.removeItem('user');
+          router.push(`/login`);
+          return response.data;
+        }
+        else{
+          return response.data;
+        }
+      });
+  }
   // qrCode() {
   //   const token=JSON.parse(localStorage.getItem('user')).token
   //   return axios

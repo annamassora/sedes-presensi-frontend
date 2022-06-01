@@ -1,6 +1,13 @@
 <template>
-  <Datepicker v-model="month" monthPicker autoApply :closeOnAutoApply="true" @update:modelValue="getMonth" style="margin: 1rem; margin-right:50vw;" />
-    <v-table
+<v-row>
+  <v-col cols="6">
+<Datepicker v-model="month" monthPicker autoApply :closeOnAutoApply="true" @update:modelValue="getMonth" style="margin: 1rem;" />
+
+  </v-col>
+</v-row>
+  
+      
+   <v-table
      theme="dark"
      fixed-header
      height="auto"
@@ -59,8 +66,9 @@
         getMonth()
         {
           console.log("datepicker: ", this.month);
-          RequestService.teacherdetail(this.month.year, this.month.month).then(result => this.attend = result)
-        }
+          RequestService.teacherdetail(this.nign, this.month.year, this.month.month).then(result => this.attend = result)
+        },
+        
     },
     created ()  {
       console.log("RequestService.teacherdetail()")

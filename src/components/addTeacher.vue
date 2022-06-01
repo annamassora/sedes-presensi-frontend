@@ -88,6 +88,9 @@
     watch:{
     showModal(newValue) {
       this.show=newValue
+      this.fullname=""
+      this.nign=""
+      this.datebirth=""
     }
     },
     computed: {

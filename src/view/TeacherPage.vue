@@ -1,5 +1,6 @@
 <template>
     <v-container>
+       
       <v-row>
         <v-col cols="12">
           <v-text-field
@@ -32,6 +33,13 @@
                         mdi-clipboard-account
                       </v-icon>
                       Add
+                </v-btn>
+                <v-btn
+                      color="error"
+                      class="ml-2"
+                      @click="downloadReport"
+                >
+                Download CSV
                 </v-btn>
             </template>
           </v-text-field>
@@ -101,8 +109,6 @@ import AddTeacher from '@/components/addTeacher.vue';
         console.log("list", this.tableLists);
     },
     methods: {
-        clickMe() {
-        },
         handleClick(item) {
             console.log(item);
             this.$router.push(`/main/teacherdetail/${item.nign}`);
@@ -111,11 +117,23 @@ import AddTeacher from '@/components/addTeacher.vue';
       openModal(){
           this.showModal = true
       },
-
+      
       closeModal(){
           this.showModal = false
           RequestService.teacherlist(this.fullname, this.nign).then(result => this.tableLists = result.list);
+          this.fullname, this.nign="";
       },
+      downloadReport(){
+          RequestService.downloadTeacherReport().then(result => 
+          {console.log(result);
+ 
+          const anchor = document.createElement('a');
+          anchor.href = 'data:text/csv;charset=utf-8,' + encodeURIComponent(result);
+          anchor.target = '_blank';
+          anchor.download = 'teacherReport.csv';
+          anchor.click();
+          });
+        },
       removeRow (id) {
        
       console.log("click")

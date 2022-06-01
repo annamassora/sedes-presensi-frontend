@@ -1,35 +1,33 @@
 <template>
   <v-container>
     <v-row
-      justify="space-between"
     >
         <v-col
-         cols="12"
-         md="4"
-         lg="4"
-        >
-        <v-form 
-         ref="form"
-         v-model="valid"
-         lazy-validation
+         cols="6"
         >
         <v-text-field
          v-model="location"
          :counter="max"
          :rules="rules"
          label="Tambah Lokasi"
+         
          required
          hide-details
         ></v-text-field>
+     </v-col>
+    <v-col
+         cols="6"
+         style="align-self: center;"
+        >
         <v-btn
           color="error"
-          class="mt-2"
+          class="ml-2"
+          :disabled="location==''"
           @click="handleSubmit"
         >
           Submit
         </v-btn>
-       </v-form>
-     </v-col>
+         </v-col>
    </v-row>
    <v-table>
     <thead>
@@ -40,7 +38,7 @@
         <th class="text-left">
           Location
         </th>
-        <th class="text-left">
+        <th class="text-left">',
           Action
         </th>
       </tr>
@@ -120,14 +118,14 @@
     }),
     created ()  {
       console.log("RequestService.studentlist()")
-      RequestService.getQrCode().then(result => this.tableLists = result)
+      RequestService.getQrCode().then(result => this.tableLists = result.qrList)
       console.log("list",this.tableLists)
     },
     components: {QRCodeVue3},
     methods: {
       handleSubmit () {
          RequestService.createQrcode(this.location).then(result => {console.log(result)
-         RequestService.getQrCode().then(result => this.tableLists = result)})
+         RequestService.getQrCode().then(result => this.tableLists = result.qrList)})
          
          this.location=""
       },
@@ -147,6 +145,7 @@
           confirmButtonText: 'Hapus',
           showCancelButton: true,
           showCloseButton: true,
+          reverseButtons: true,
           showLoaderOnConfirm: true,
         }).then((result) => {
          if(result.value) {
@@ -154,7 +153,7 @@
               console.log("res :", res)
               if(res.status==200)
               {
-                 RequestService.getQrCode().then(result => this.tableLists = result)
+                 RequestService.getQrCode().then(result => this.tableLists = result.qrList)
               }
               else{
                  this.$swal('Hapus data gagal', 'Silahkan coba lagi', 'error')

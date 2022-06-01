@@ -33,6 +33,13 @@
                       </v-icon>
                       Add
                 </v-btn>
+                <v-btn
+                      color="error"
+                      class="ml-2"
+                      @click="downloadReport"
+                >
+                Download CSV
+                </v-btn>
             </template>
           </v-text-field>
         </v-col>
@@ -115,7 +122,19 @@ import AddStudent from '@/components/addStudent.vue';
       closeModal(){
           this.showModal = false
           RequestService.studentlist(this.fullname, this.nisn).then(result => this.tableLists = result.list);
+          
       },
+      downloadReport(){
+          RequestService.downloadStudentReport().then(result => 
+          {console.log(result);
+ 
+          const anchor = document.createElement('a');
+          anchor.href = 'data:text/csv;charset=utf-8,' + encodeURIComponent(result);
+          anchor.target = '_blank';
+          anchor.download = 'studentReport.csv';
+          anchor.click();
+          });
+        },
       removeRow (id) {
        
       console.log("click")
