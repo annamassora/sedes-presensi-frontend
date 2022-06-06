@@ -6,6 +6,7 @@
             v-model="filter"
             outlined
             clearable
+            hide-details
             label="Search"
             type="text"
           >
@@ -22,27 +23,28 @@
               </v-tooltip>
             </template>
             <template v-slot:append>
-               <v-btn
-                      large
-                      text
-                      color="primary"
-                      @click="openModal"
-                    >
-                      <v-icon left>
-                        mdi-clipboard-account
-                      </v-icon>
-                      Add
-                </v-btn>
-                <v-btn
-                      color="error"
-                      class="ml-2"
-                      @click="downloadReport"
-                >
-                Download CSV
-                </v-btn>
+               <div>
+            <v-btn large text color="primary" @click="openModal">
+              <v-icon left>
+                mdi-clipboard-account
+              </v-icon>
+              Add
+            </v-btn>
+            <v-btn large text color="primary" class="ml-2" @click="openUploadModal">
+              <v-icon left>
+                mdi-clipboard-account
+              </v-icon>
+              csv
+            </v-btn>  
+            <v-btn large color="error" class="ml-2" @click="downloadReport">
+              Download CSV
+            </v-btn>
+          </div>
             </template>
           </v-text-field>
+          
         </v-col>
+        
       </v-row>
       <v-table>
       <thead>
@@ -90,10 +92,12 @@
       </v-table>
     </v-container>
     <AddStudent :showModal="showModal" ></AddStudent>     
+    <AddStudentCsv :showModal="showUploadModal" ></AddStudentCsv>     
 </template>
 <script>
 import RequestService from '../service/request.service';
 import AddStudent from '@/components/addStudent.vue';
+import AddStudentCsv from '@/components/uploadStudentCsv.vue';
   export default {
     data: () => ({
         filter: "",
@@ -101,6 +105,7 @@ import AddStudent from '@/components/addStudent.vue';
         tableLists: [],
         dialog: false,
         showModal: false,
+        showUploadModal: false,
     }),
     created() {
         console.log("RequestService.studentlist()");
@@ -121,6 +126,16 @@ import AddStudent from '@/components/addStudent.vue';
 
       closeModal(){
           this.showModal = false
+          RequestService.studentlist(this.fullname, this.nisn).then(result => this.tableLists = result.list);
+          
+      },
+
+      openUploadModal(){
+          this.showUploadModal = true
+      },
+
+      closeUploadModal(){
+          this.showUploadModal = false
           RequestService.studentlist(this.fullname, this.nisn).then(result => this.tableLists = result.list);
           
       },
@@ -176,7 +191,7 @@ import AddStudent from '@/components/addStudent.vue';
 
               if (this.tableLists != []) {
                   newArray = this.tableLists.filter((tableList) => {
-                      return tableList.fullname.toLocaleLowerCase(), tableList.nisn.toLocaleLowerCase().includes(this.filter.toLocaleLowerCase());
+                      return tableList.fullname.toLocaleLowerCase().includes(this.filter.toLocaleLowerCase())|| tableList.nisn.toLocaleLowerCase().includes(this.filter.toLocaleLowerCase());
                   });
                   return newArray
               }
@@ -190,6 +205,6 @@ import AddStudent from '@/components/addStudent.vue';
         },
     },
     
-    components: { AddStudent }
+    components: { AddStudent, AddStudentCsv }
 }
 </script>

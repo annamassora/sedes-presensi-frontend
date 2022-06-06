@@ -294,6 +294,28 @@ class RequestService {
         }
       });
   }
+  addStudentCsv(file) {
+    const reqData = { daftar_siswa:file, };
+    const token=JSON.parse(localStorage.getItem('user')).token
+    return axios
+      .post(API_URL + 'importStudent',reqData, {headers: {
+        "Content-Type": "multipart/form-data",
+        "token": token,
+      }})
+      .then(response => {
+        if (response.data.status==200) {
+          return response.data
+        }
+        else if(response.data.status == 401) {
+          localStorage.removeItem('user');
+          router.push(`/login`);
+          return response.data;
+        }
+        else{
+          return response.data;
+        }
+      });
+  }
   deleteTeacher(id) {
     const reqData = { id: id };
     const token=JSON.parse(localStorage.getItem('user')).token
