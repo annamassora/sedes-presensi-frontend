@@ -38,7 +38,7 @@
                       class="ml-2"
                       @click="downloadReport"
                 >
-                Download CSV
+                Export CSV
                 </v-btn>
             </template>
           </v-text-field>
