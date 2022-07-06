@@ -4,7 +4,7 @@
 </div>
 <div v-else>
     <v-container  style="">
-      <Carousel :autoplay="6000" :wrap-around="true">
+      <!-- <Carousel :autoplay="6000" :wrap-around="true">
         <Slide v-for="slide in 5"  :key="slide">
           <div class="carousel__item d-flex"
           >
@@ -27,7 +27,7 @@
         <template #addons>
           <Pagination />
         </template>
-      </Carousel>
+      </Carousel> -->
     </v-container>
     <div class="ma-5 pa-5">
       <v-subheader key="Check-in" inset>Check-in</v-subheader>
@@ -63,7 +63,7 @@ import BarChart from '../components/BarChart.vue'
 import CheckOutCard from '../components/CheckOutCard.vue'
 import RequestService from '../service/request.service'
 import 'vue3-carousel/dist/carousel.css';
-import { Carousel, Slide } from 'vue3-carousel';
+// import { Carousel, Slide } from 'vue3-carousel';
 export default {
   data() {
     return {
@@ -83,14 +83,14 @@ export default {
       if(this.user.role!=2)
       {
 
-        RequestService.last_checkin().then(result => this.dataCards = result)
+        RequestService.last_checkin().then(result => this.dataCards = result.attendance)
       }
  
   },
   // name: 'App',
   components: {
-    Carousel,
-    Slide,
+    // Carousel,
+    // Slide,
     CheckOutCard,
     BarChart,
 },

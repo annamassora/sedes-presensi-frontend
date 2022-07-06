@@ -3,25 +3,34 @@
     <v-navigation-drawer
         v-if="displayMobile"
         left
-        v-model="drawer"
+        style="position: fixed; height:100%"
+        v-model="drawerShow"
         temprorary
     >
+        <template #prepend>
+            <v-list nav>
+                <div style="text-align: center; margin: 30px 10px;">
+                    <v-icon size= 65>
+                    mdi-account-circle-outline <!--ganti avatar-->
+                    </v-icon>
+                    <p style="margin-top: 10px;">
+                      {{user.username}}
+                    </p>
+                    <p style="margin-top: 10px;">
+                      {{user.indentifier}}
+                    </p>
+                </div>
+            </v-list>
+        </template>
+        <v-list nav>
+            <v-list-item prepend-icon="mdi-home-city" title="Dashboard" value="Dashboard" @click="this.$router.push('/main')"></v-list-item>
+            <v-list-item prepend-icon="mdi-clipboard-account" title="Report" value="account" @click="this.$router.push('/main/report')"></v-list-item>
+        </v-list>
         <template #append>
             <v-list nav>
                 <v-list-item prepend-icon="mdi-account-group-outline" title="logout" @click="handleLogout()" value="logout"></v-list-item>
             </v-list>
         </template>
-        <v-list density="compact" nav>
-            <v-list-item
-                prepend-icon="mdi-account-circle-outline"
-                :title="user.username"
-                :subtitle="user.indentifier"
-            ></v-list-item>
-            <v-list nav>
-                <v-list-item prepend-icon="mdi-home-city" title="Dashboard" value="Dashboard" @click="this.$router.push('/main')"></v-list-item>
-                <v-list-item prepend-icon="mdi-clipboard-account" title="Report" value="account" @click="this.$router.push('/main/report')"></v-list-item>
-            </v-list>
-        </v-list>
       </v-navigation-drawer>
 
 <!-- DISPLAY-WEBSITE -->
@@ -65,12 +74,13 @@
 export default {
   data() { //
     return {
-      drawer: true,
+      drawerShow: true,
       group: null,
     }
   },
   props: {
       displayMobile:Boolean,
+      drawer:Boolean,
       user : String,
   },
   computed:{
@@ -82,19 +92,29 @@ export default {
     console.log("this.$route.name",this.$router.currentRoute.name)
     if(this.displayMobile==true)
     {
-      this.drawer=false
+      this.drawerShow=false
     }
   },
   methods: {
      handleLogout() {
       this.$store.dispatch("auth/logout");
       this.$router.push("/");
-     }
+     },
   },
   watch: {
       group () {
-        this.drawer = false
+        this.drawerShow = false
       },
+      drawer(newValue) {
+        console.log(newValue)
+        this.drawerShow=newValue
+    },
+    drawerShow(newValue) {
+      if(!newValue)
+      {
+        this.$emit('toogleDrawer')
+      }
+    }
     },
   
 }

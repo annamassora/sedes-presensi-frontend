@@ -38,7 +38,7 @@
         <th class="text-left">
           Location
         </th>
-        <th class="text-left">',
+        <th class="text-left">
           Action
         </th>
       </tr>

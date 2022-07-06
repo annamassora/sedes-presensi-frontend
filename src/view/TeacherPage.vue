@@ -1,12 +1,12 @@
 <template>
     <v-container>
-       
       <v-row>
         <v-col cols="12">
           <v-text-field
             v-model="filter"
             outlined
             clearable
+            hide-details
             label="Search"
             type="text"
           >
@@ -23,27 +23,28 @@
               </v-tooltip>
             </template>
             <template v-slot:append>
-               <v-btn
-                      large
-                      text
-                      color="primary"
-                      @click="openModal"
-                    >
-                      <v-icon left>
-                        mdi-clipboard-account
-                      </v-icon>
-                      Add
+            <div>
+                <v-btn large text color="primary" @click="openModal">
+                  <v-icon left>
+                    mdi-clipboard-account
+                  </v-icon>
+                  Add
                 </v-btn>
-                <v-btn
-                      color="error"
-                      class="ml-2"
-                      @click="downloadReport"
-                >
-                Download CSV
+                <v-btn large text color="primary" class="ml-2" @click="openUploadModal">
+                  <v-icon left>
+                    mdi-clipboard-account
+                  </v-icon>
+                  csv
+                </v-btn>  
+                <v-btn large color="error" class="ml-2" @click="downloadReport">
+                  Download CSV
                 </v-btn>
+            </div>
             </template>
           </v-text-field>
+          
         </v-col>
+        
       </v-row>
       <v-table>
       <thead>
@@ -55,7 +56,9 @@
             Nama Lengkap
           </th>
           <th class="text-left">
-            NIGN
+            No Urut
+          </th><th class="text-left">
+            Tanggal Lahir
           </th>
           <th class="text-left">
           Action
@@ -70,7 +73,8 @@
         >
           <td>{{ index+1 }}</td>
           <td>{{ item.fullname }}</td>
-          <td>{{ item.nign }}</td>
+          <td>{{ item.nourut }}</td>
+          <td>{{ item.datebirth }}</td>
            <td>
             <v-btn class="mr-5"
             color="error"
@@ -81,7 +85,7 @@
             
             <v-btn
             color="error"
-            @click="removeRow(item.nign)"
+            @click="removeRow(item.nourut)"
             >
             Hapus
             </v-btn>
@@ -91,10 +95,12 @@
       </v-table>
     </v-container>
     <AddTeacher :showModal="showModal" ></AddTeacher>     
+    <AddTeacherCsv :showModal="showUploadModal" ></AddTeacherCsv>     
 </template>
 <script>
 import RequestService from '../service/request.service';
 import AddTeacher from '@/components/addTeacher.vue';
+import AddTeacherCsv from '@/components/uploadTeacherCsv.vue';
   export default {
     data: () => ({
         filter: "",
@@ -102,26 +108,39 @@ import AddTeacher from '@/components/addTeacher.vue';
         tableLists: [],
         dialog: false,
         showModal: false,
+        showUploadModal: false,
     }),
     created() {
         console.log("RequestService.teacherlist()");
-        RequestService.teacherlist(this.fullname, this.nign).then(result => this.tableLists = result.list);
+        RequestService.teacherlist(this.fullname, this.nourut).then(result => this.tableLists = result.list);
         console.log("list", this.tableLists);
     },
     methods: {
+        clickMe() {
+        },
         handleClick(item) {
             console.log(item);
-            this.$router.push(`/main/teacherdetail/${item.nign}`);
+            this.$router.push(`/main/teacherdetail/${item.nourut}`);
         },
 
       openModal(){
           this.showModal = true
       },
-      
+
       closeModal(){
           this.showModal = false
-          RequestService.teacherlist(this.fullname, this.nign).then(result => this.tableLists = result.list);
-          this.fullname, this.nign="";
+          RequestService.teacherlist(this.fullname, this.nourut).then(result => this.tableLists = result.list);
+          
+      },
+
+      openUploadModal(){
+          this.showUploadModal = true
+      },
+
+      closeUploadModal(){
+          this.showUploadModal = false
+          RequestService.teacherlist(this.fullname, this.nourut).then(result => this.tableLists = result.list);
+          
       },
       downloadReport(){
           RequestService.downloadTeacherReport().then(result => 
@@ -175,7 +194,7 @@ import AddTeacher from '@/components/addTeacher.vue';
 
               if (this.tableLists != []) {
                   newArray = this.tableLists.filter((tableList) => {
-                      return tableList.fullname.toLocaleLowerCase(), tableList.nign.toLocaleLowerCase().includes(this.filter.toLocaleLowerCase());
+                      return tableList.fullname.toLocaleLowerCase().includes(this.filter.toLocaleLowerCase())|| tableList.nourut.toLocaleLowerCase().includes(this.filter.toLocaleLowerCase());
                   });
                   return newArray
               }
@@ -189,6 +208,6 @@ import AddTeacher from '@/components/addTeacher.vue';
         },
     },
     
-    components: { AddTeacher }
+    components: { AddTeacher, AddTeacherCsv }
 }
 </script>

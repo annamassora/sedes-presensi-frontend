@@ -2,8 +2,8 @@ import axios from 'axios';
 const API_URL = 'http://localhost:5000/api/';
 import router from "../router.js";
 class RequestService {
-  attendance(temperature, qrString) {
-    const reqData = { temperature: temperature, qrString:qrString };
+  attendance(qrString) {
+    const reqData = { qrString:qrString };
     const token=JSON.parse(localStorage.getItem('user')).token
     return axios
       .post(API_URL + 'checkin', reqData, {headers: {
@@ -140,11 +140,11 @@ class RequestService {
         }
       });
   }
-  teacherdetail(nign, year, month) {
+  teacherdetail(nourut, year, month) {
     console.log(year,month)
     const token=JSON.parse(localStorage.getItem('user')).token
     return axios
-      .get(API_URL + 'teacherDetail?nign='+nign+"&year="+year+"&month="+month, {headers: {
+      .get(API_URL + 'teacherDetail?nourut='+nourut+"&year="+year+"&month="+month, {headers: {
         "Content-Type": "multipart/form-data",
         "token": token,
       }})
@@ -299,6 +299,28 @@ class RequestService {
     const token=JSON.parse(localStorage.getItem('user')).token
     return axios
       .post(API_URL + 'importStudent',reqData, {headers: {
+        "Content-Type": "multipart/form-data",
+        "token": token,
+      }})
+      .then(response => {
+        if (response.data.status==200) {
+          return response.data
+        }
+        else if(response.data.status == 401) {
+          localStorage.removeItem('user');
+          router.push(`/login`);
+          return response.data;
+        }
+        else{
+          return response.data;
+        }
+      });
+  }
+  addTeacherCsv(file) {
+    const reqData = { daftar_guru:file, };
+    const token=JSON.parse(localStorage.getItem('user')).token
+    return axios
+      .post(API_URL + 'importTeacher',reqData, {headers: {
         "Content-Type": "multipart/form-data",
         "token": token,
       }})

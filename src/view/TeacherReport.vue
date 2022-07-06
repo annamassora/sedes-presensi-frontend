@@ -18,9 +18,9 @@
             <th class="text-left">
               Check-In
             </th>
-            <th class="text-left">
+            <!-- <th class="text-left">
               Suhu
-            </th>
+            </th> -->
             <th class="text-left">
               Lokasi
             </th>
@@ -35,7 +35,7 @@
             :key="item.name"
           >
             <td>{{ item.check_in }}</td>
-            <td>{{ item.temperature }}</td>
+            <!-- <td>{{ item.temperature }}</td> -->
             <td>{{ item.location }}</td>
             <td>{{ item.check_out }}</td>
           </tr>
@@ -49,11 +49,10 @@
   import '@vuepic/vue-datepicker/dist/main.css'
   import RequestService from '../service/request.service';
   export default {
-    props: {'nign':String},
+    props: {'nourut':String},
     data () {
       return {
-        attend: [
-        ],
+        attend: [],
         month : ref({ 
             year: new Date().getFullYear(),
             month: new Date().getMonth()
@@ -66,18 +65,20 @@
         getMonth()
         {
           console.log("datepicker: ", this.month);
-          RequestService.teacherdetail(this.nign, this.month.year, this.month.month).then(result => this.attend = result)
-        },
-        
+          RequestService.teacherdetail(this.nourut, this.month.year, this.month.month).then(result => this.attend = result.attendance)
+        },        
     },
     created ()  {
       console.log("RequestService.teacherdetail()")
-      RequestService.teacherdetail(this.nign, this.month.year, this.month.month).then(result => this.attend = result)
-      console.log("attend",this.attend)
+      RequestService.teacherdetail(this.nourut, this.month.year, this.month.month).then(result => {
+        // console.log("result",result)
+        this.attend = result.attendance
+        })
+      // console.log("attend",this.attend)
     },
     computed : {
       sorted_attendance(){
-        console.log(this.attend)
+        console.log("sorted_attendance",((this.attend.check_in!=null) ? this.attend.check_in.slice().sort() : this.attend))
         return  ((this.attend.check_in!=null) ? this.attend.check_in.slice().sort() : this.attend);
       }
     }

@@ -11,9 +11,9 @@
             <th class="text-left">
               Check-In
             </th>
-            <th class="text-left">
+            <!-- <th class="text-left">
               Suhu
-            </th>
+            </th> -->
             <th class="text-left">
               Lokasi
             </th>
@@ -28,7 +28,7 @@
             :key="item.name"
           >
             <td>{{ item.check_in }}</td>
-            <td>{{ item.temperature }}</td>
+            <!-- <td>{{ item.temperature }}</td> -->
             <td>{{ item.location }}</td>
             <td>{{ item.check_out }}</td>
           </tr>
@@ -58,12 +58,12 @@
         getMonth()
         {
           console.log("datepicker: ", this.month);
-          RequestService.report(this.month.year, this.month.month).then(result => this.attend = result)
+          RequestService.report(this.month.year, this.month.month).then(result => this.attend = result.attendance)
         }
     },
     created ()  {
       console.log("RequestService.report()")
-      RequestService.report(this.month.year, this.month.month).then(result => this.attend = result)
+      RequestService.report(this.month.year, this.month.month).then(result => this.attend = result.attendance)
       console.log("attend",this.attend)
     },
     computed : {

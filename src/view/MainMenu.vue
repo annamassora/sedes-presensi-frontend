@@ -1,11 +1,11 @@
 <template>
   <v-layout>
       <!-- <v-system-bar color="deep-purple darken-3"></v-system-bar> -->
-      <AppBar :title="routeName" :displayMobile="displayMobile"></AppBar>
+      <AppBar @toogle-drawer="toogleDrawer" :title="routeName" :displayMobile="displayMobile" ></AppBar>
 
-      <NavbarStudent v-if="user.role==1" :displayMobile="displayMobile" :drawer="drawer" :user="user"></NavbarStudent>
-      <NavbarTeacher v-else-if="user.role==0" :displayMobile="displayMobile" :drawer="drawer" :user="user"></NavbarTeacher>
-      <NavbarAdmin v-else :displayMobile="displayMobile" :drawer="drawer" :user="user"></NavbarAdmin>
+      <NavbarStudent @toogle-drawer="toogleDrawer"  v-if="user.role==1" :displayMobile="displayMobile" :drawer="drawer" :user="user"></NavbarStudent>
+      <NavbarTeacher @toogle-drawer="toogleDrawer"  v-else-if="user.role==0" :displayMobile="displayMobile" :drawer="drawer" :user="user"></NavbarTeacher>
+      <NavbarAdmin @toogle-drawer="toogleDrawer"  v-else :displayMobile="displayMobile" :drawer="drawer" :user="user"></NavbarAdmin>
       <v-main >
         <router-view></router-view>
       </v-main>
@@ -32,6 +32,7 @@ export default {
        return this.$route.name
     },
   },
+   
   components: {
     AppBar,
     NavbarStudent,
@@ -39,14 +40,25 @@ export default {
     NavbarAdmin
 
 },  
+methods:{
+  toogleDrawer()
+  {
+     this.drawer=!this.drawer
+  }
+},
   created() {
     console.log("this.$route.name",this.$router.currentRoute.name)
     this.user= JSON.parse(localStorage.getItem('user')).user;
     console.log("this.user : ",this.user);
     const display = useDisplay();
     this.displayMobile=display.mobile.value;
-    
+    this.drawer=!this.displayMobile
     console.log("display.thresholds.md : ",this.displayMobile) // 1280
+  },
+  watch:{
+    drawer(newValue) {
+      console.log("drawer new value:", newValue)
+    }
   }
 }
 

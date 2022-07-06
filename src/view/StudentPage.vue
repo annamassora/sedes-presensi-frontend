@@ -23,23 +23,23 @@
               </v-tooltip>
             </template>
             <template v-slot:append>
-               <div>
-            <v-btn large text color="primary" @click="openModal">
-              <v-icon left>
-                mdi-clipboard-account
-              </v-icon>
-              Add
-            </v-btn>
-            <v-btn large text color="primary" class="ml-2" @click="openUploadModal">
-              <v-icon left>
-                mdi-clipboard-account
-              </v-icon>
-              csv
-            </v-btn>  
-            <v-btn large color="error" class="ml-2" @click="downloadReport">
-              Download CSV
-            </v-btn>
-          </div>
+            <div>
+                <v-btn large text color="primary" @click="openModal">
+                  <v-icon left>
+                    mdi-clipboard-account
+                  </v-icon>
+                  Add
+                </v-btn>
+                <v-btn large text color="primary" class="ml-2" @click="openUploadModal">
+                  <v-icon left>
+                    mdi-clipboard-account
+                  </v-icon>
+                  csv
+                </v-btn>  
+                <v-btn large color="error" class="ml-2" @click="downloadReport">
+                  Download CSV
+                </v-btn>
+            </div>
             </template>
           </v-text-field>
           
@@ -57,6 +57,8 @@
           </th>
           <th class="text-left">
             NISN
+          </th><th class="text-left">
+            Tanggal Lahir
           </th>
           <th class="text-left">
           Action
@@ -72,6 +74,7 @@
           <td>{{ index+1 }}</td>
           <td>{{ item.fullname }}</td>
           <td>{{ item.nisn }}</td>
+          <td>{{ item.datebirth }}</td>
            <td>
             <v-btn class="mr-5"
             color="error"

@@ -5,7 +5,7 @@
             <v-card elevation="0">
               <p class="decode-result">Arahkan kamera ke QRCode Presensi: <b>{{ result }}</b></p>
               <div class="center stream">
-                <QrcodeStream @decode="onDecode" class="mb"/>
+                <QrcodeStream @decode="onDecode" class="mb" @init="onInit"/>
               </div>
             </v-card>
           </v-col>
@@ -15,11 +15,11 @@
 
 <script>
 import { QrcodeStream} from 'qrcode-reader-vue3'
-import RequestService from '../service/request.service';
+// import RequestService from '../service/request.service';
 export default {
   data() {
     return {
-      temperature:0,
+      // temperature:0,
       qrString:""
     }
   },
@@ -33,32 +33,7 @@ export default {
     onDecode (decodedString) 
     {
       this.qrString = decodedString
-      console.log("decodedString :", decodedString)
-      this.$swal.fire({
-      title: "Submit Suhu!",
-      text: "Ketikan suhu anda saat ini",
-      input: 'text',
-      allowOutsideClick: false,
-      closeOnClickOutside: false,
-      allowEscapeKey: false,
-      confirmButtonColor: 'green'
-      }).then((result) => 
-      {
 
-        if (result.value>=38&&result.value<35) {
-            this.$swal.fire({
-                            title: 'Suhu tidak normal, silahkan cek kesehatan anda',
-                            allowOutsideClick: false,
-                            closeOnClickOutside: false,
-                            allowEscapeKey: false
-                            });
-            this.$router.replace("/main");
-        }
-
-       else if (result.value>=35&&result.value<38) {
-            this.temperature=result.value
-            this.$swal.fire('Suhu Anda:'+result.value);
-            RequestService.attendance(this.temperature, this.qrString)
             console.log("decodedString :", decodedString);
             this.$router.replace("/main");
             this.$swal.fire({
@@ -71,21 +46,31 @@ export default {
             allowEscapeKey: false,
             timer: 1500
             });
-        }
-
-        else if (result.value==''){
-            this.$swal.fire({
-                icon: 'error',
-                title: 'Oops...',
-                text: 'Anda belum mengetik Suhu tubuh',
-                allowOutsideClick: false,
-                closeOnClickOutside: false,
-                allowEscapeKey: false,
-                }).then(this.$router.replace("/main"))
-        }
-
         console.log("decodedString :", decodedString)
-      }) 
+      
+    },
+    async onInit (promise) {
+      try {
+        await promise
+      } catch (error) {
+        if (error.name === 'NotAllowedError') {
+          this.error = "ERROR: you need to grant camera access permission"
+        } else if (error.name === 'NotFoundError') {
+          this.error = "ERROR: no camera on this device"
+        } else if (error.name === 'NotSupportedError') {
+          this.error = "ERROR: secure context required (HTTPS, localhost)"
+        } else if (error.name === 'NotReadableError') {
+          this.error = "ERROR: is the camera already in use?"
+        } else if (error.name === 'OverconstrainedError') {
+          this.error = "ERROR: installed cameras are not suitable"
+        } else if (error.name === 'StreamApiNotSupportedError') {
+          this.error = "ERROR: Stream API is not supported in this browser"
+        } else if (error.name === 'InsecureContextError') {
+          this.error = 'ERROR: Camera access is only permitted in secure context. Use HTTPS or localhost rather than HTTP.';
+        } else {
+          this.error = `ERROR: Camera error (${error.name})`;
+        }
+      }
     }
   },
   async mounted() {
