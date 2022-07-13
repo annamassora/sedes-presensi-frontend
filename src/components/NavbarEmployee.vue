@@ -3,11 +3,10 @@
     <v-navigation-drawer
         v-if="displayMobile"
         left
-        v-model="drawerShow"
         style="position: fixed; height:100%"
+        v-model="drawerShow"
         temprorary
     >
-        
         <template #prepend>
             <v-list nav>
                 <div style="text-align: center; margin: 30px 10px;">
@@ -25,11 +24,7 @@
         </template>
         <v-list nav>
             <v-list-item prepend-icon="mdi-home-city" title="Dashboard" value="Dashboard" @click="this.$router.push('/main')"></v-list-item>
-            <v-list-item prepend-icon="mdi-account-details" title="Teacher" value="teacherAccount" @click="this.$router.push('/main/listTeacher')"></v-list-item>
-            <v-list-item prepend-icon="mdi-account-details" title="Student" value="studentAccount" @click="this.$router.push('/main/listStudent')"></v-list-item>
-            <v-list-item prepend-icon="mdi-account-details" title="Employee" value="employeeAccount" @click="this.$router.push('/main/listEmployee')"></v-list-item>
-            <v-list-item prepend-icon="mdi-account-details" title="Setting" value="settingAccount" @click="this.$router.push('/main/adminSetting')"></v-list-item>
-            <v-list-item prepend-icon="mdi-account-details" title="QRCode" value="qrcode" @click="this.$router.push('/main/qrCode')"></v-list-item>
+            <v-list-item prepend-icon="mdi-clipboard-account" title="Report" value="account" @click="this.$router.push('/main/report')"></v-list-item>
         </v-list>
         <template #append>
             <v-list nav>
@@ -63,11 +58,7 @@
         </template>
         <v-list nav>
             <v-list-item prepend-icon="mdi-home-city" title="Dashboard" value="Dashboard" @click="this.$router.push('/main')"></v-list-item>
-            <v-list-item prepend-icon="mdi-account-details" title="Teacher" value="teacherAccount" @click="this.$router.push('/main/listTeacher')"></v-list-item>
-            <v-list-item prepend-icon="mdi-account-details" title="Student" value="studentAccount" @click="this.$router.push('/main/listStudent')"></v-list-item>
-            <v-list-item prepend-icon="mdi-account-details" title="Employee" value="employeeAccount" @click="this.$router.push('/main/listEmployee')"></v-list-item>
-            <v-list-item prepend-icon="mdi-account-details" title="QRCode" value="qrcode" @click="this.$router.push('/main/qrCode')"></v-list-item>
-            <v-list-item prepend-icon="mdi-account-details" title="Setting" value="settingAccount" @click="this.$router.push('/main/adminSetting')"></v-list-item>
+            <v-list-item prepend-icon="mdi-clipboard-account" title="Report" value="account" @click="this.$router.push('/main/report')"></v-list-item>
         </v-list>
         <template #append>
             <v-list nav>

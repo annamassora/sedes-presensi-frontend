@@ -1,42 +1,19 @@
 <template>
     <div>
     <vue-final-modal v-model="show" classes="modal-container" content-class="modal-content" @closed="$parent.closeModal">
-      <span class="modal__title">Add Student</span>
+      <span class="modal__title">Add Employee from CSV</span>
       <div class="modal__content" style="width:50vw">
-        <v-col cols="12" >
-          <v-text-field
-            label="Fullname*"
-            v-model="fullname"
-            required
-          ></v-text-field>
-        </v-col>
-        <v-col cols="12">
-          <v-text-field
-            label="NISN*"
-            v-model="nisn"
-            required
-          ></v-text-field>
-        </v-col>
-        <v-col cols="12">
-          <v-text-field
-            label="Datebirth (DD/MM/YYYY)*"
-            v-model="datebirth"
-            required
-          ></v-text-field>
-        </v-col>
-        <v-col cols="12">
-          <v-text-field
-            label="Kelas*"
-            v-model="id_class"
-            required
-          ></v-text-field>
-        </v-col>
+        <v-file-input
+          accept=".csv"
+          v-model="file"
+          label="File input"
+        ></v-file-input>
         <v-card-actions>
          <v-spacer></v-spacer>
          <v-btn
            color="blue darken-1"
            text
-           @click="$parent.closeModal"
+           @click="$parent.closeUploadModal"
          >
            Close
          </v-btn>
@@ -60,35 +37,32 @@
     showModal: Boolean,
   },
     data: () => ({
-      fullname: "",
-      nisn: "",
-      datebirth: "",
-      id_class:"",
+      file: "",
       show:false
     }),
     methods: {
       handleClick () {
+        console.log(this.file)
           const parent=this.$parent;
-          if(this.fullname!=""&&this.nisn!= ""&&
-      this.datebirth!= "")
+          if(this.file!="")
       {
-         RequestService.addStudent(this.fullname, this.datebirth, this.nisn, this.id_class).then((result)=>{
+         RequestService.addEmployeeCsv(this.file[0]).then((result)=>{
               console.log("res :", result)
               if(result.status==200)
               {
-                  this.$swal('Add Student Berhasil', 'Student berhasil di tambahkan', 'success');
-                  parent.closeModal();
+                  this.$swal('Add Employee Berhasil', 'Data Karyawan berhasil di tambahkan', 'success');
+                  parent.closeUploadModal();
               }
               else{
-                 this.$swal('Add Student gagal', 'Silahkan coba lagi', 'error');
+                 this.$swal('Add Employee gagal', 'Silahkan coba lagi', 'error');
                 //  parent.closeModal;
                  
               }
-              console.log("RequestService.addStudent", result)
+              console.log("RequestService.addEmployee", result)
               })
       }
       else{
-          this.$swal('Add Student gagal', 'Silahkan Isi semua field terlebih dahulu', 'error')
+          this.$swal('Add Employee gagal', 'Silahkan pilih file', 'error')
       }
        
       },
@@ -96,9 +70,7 @@
     watch:{
     showModal(newValue) {
       this.show=newValue
-      this.fullname=""
-      this.nisn=""
-      this.datebirth=""
+      this.file=""
     }
     },
     computed: {

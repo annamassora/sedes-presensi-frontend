@@ -50,7 +50,7 @@
               console.log("res :", result)
               if(result.status==200)
               {
-                  this.$swal('Add Teacher Berhasil', 'Teacher berhasil di tambahkan', 'success');
+                  this.$swal('Add Teacher Berhasil', 'Data Guru berhasil di tambahkan', 'success');
                   parent.closeUploadModal();
               }
               else{

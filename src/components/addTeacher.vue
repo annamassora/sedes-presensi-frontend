@@ -12,15 +12,15 @@
         </v-col>
         <v-col cols="12">
           <v-text-field
-            label="NIGN*"
-            v-model="nign"
+            label="Datebirth (DD/MM/YYYY)*"
+            v-model="datebirth"
             required
           ></v-text-field>
         </v-col>
-        <v-col cols="12">
+         <v-col cols="12">
           <v-text-field
-            label="Datebirth (DD/MM/YYYY)*"
-            v-model="datebirth"
+            label="Jabatan"
+            v-model="title"
             required
           ></v-text-field>
         </v-col>
@@ -54,21 +54,21 @@
   },
     data: () => ({
       fullname: "",
-      nign: "",
       datebirth: "",
+      title:"",
       show:false
     }),
     methods: {
       handleClick () {
           const parent=this.$parent;
-          if(this.fullname!=""&&this.nign!= ""&&
+          if(this.fullname!=""&&this.nourut!= ""&&
       this.datebirth!= "")
       {
-         RequestService.addTeacher(this.fullname, this.datebirth, this.nign).then((result)=>{
+         RequestService.addTeacher(this.fullname, this.datebirth, this.title).then((result)=>{
               console.log("res :", result)
               if(result.status==200)
               {
-                  this.$swal('Add Teacher Berhasil', 'Teacher berhasil di tambahkan', 'success');
+                  this.$swal('Add Teacher Berhasil', 'Data Guru berhasil di tambahkan', 'success');
                     parent.closeModal();
               }
               else{

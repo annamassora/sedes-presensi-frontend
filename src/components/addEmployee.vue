@@ -1,7 +1,7 @@
 <template>
     <div>
     <vue-final-modal v-model="show" classes="modal-container" content-class="modal-content" @closed="$parent.closeModal">
-      <span class="modal__title">Add Student</span>
+      <span class="modal__title">Add Employee</span>
       <div class="modal__content" style="width:50vw">
         <v-col cols="12" >
           <v-text-field
@@ -12,22 +12,15 @@
         </v-col>
         <v-col cols="12">
           <v-text-field
-            label="NISN*"
-            v-model="nisn"
-            required
-          ></v-text-field>
-        </v-col>
-        <v-col cols="12">
-          <v-text-field
             label="Datebirth (DD/MM/YYYY)*"
             v-model="datebirth"
             required
           ></v-text-field>
         </v-col>
-        <v-col cols="12">
+         <v-col cols="12">
           <v-text-field
-            label="Kelas*"
-            v-model="id_class"
+            label="Jabatan*"
+            v-model="title"
             required
           ></v-text-field>
         </v-col>
@@ -61,34 +54,33 @@
   },
     data: () => ({
       fullname: "",
-      nisn: "",
       datebirth: "",
-      id_class:"",
+      title:"",
       show:false
     }),
     methods: {
       handleClick () {
           const parent=this.$parent;
-          if(this.fullname!=""&&this.nisn!= ""&&
+          if(this.fullname!=""&&this.nourut!= ""&&
       this.datebirth!= "")
       {
-         RequestService.addStudent(this.fullname, this.datebirth, this.nisn, this.id_class).then((result)=>{
+         RequestService.addEmployee(this.fullname, this.datebirth, this.title).then((result)=>{
               console.log("res :", result)
               if(result.status==200)
               {
-                  this.$swal('Add Student Berhasil', 'Student berhasil di tambahkan', 'success');
-                  parent.closeModal();
+                  this.$swal('Add Employee Berhasil', 'Data Karyawan berhasil di tambahkan', 'success');
+                    parent.closeModal();
               }
               else{
-                 this.$swal('Add Student gagal', 'Silahkan coba lagi', 'error');
+                 this.$swal('Add Employee gagal', 'Silahkan coba lagi', 'error');
                 //  parent.closeModal;
                  
               }
-              console.log("RequestService.addStudent", result)
+              console.log("RequestService.addEmployee", result)
               })
       }
       else{
-          this.$swal('Add Student gagal', 'Silahkan Isi semua field terlebih dahulu', 'error')
+          this.$swal('Add Employee gagal', 'Silahkan Isi semua field terlebih dahulu', 'error')
       }
        
       },
@@ -97,7 +89,7 @@
     showModal(newValue) {
       this.show=newValue
       this.fullname=""
-      this.nisn=""
+      this.nign=""
       this.datebirth=""
     }
     },

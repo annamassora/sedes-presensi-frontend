@@ -6,8 +6,11 @@ import reportPage from './view/ReportPage.vue'
 import dashboardPage from './view/DashboardPage.vue'
 import listTeacher from './view/TeacherPage.vue'
 import listStudent from './view/StudentPage.vue'
+import listEmployee from './view/EmployeePage.vue'
 import teacherdetail from './view/TeacherReport.vue'
 import studentdetail from './view/StudentReport.vue'
+import employeedetail from './view/EmployeeReport.vue'
+import adminSetting from './view/AdminSetting.vue'
 
 import qrCode from './view/QrcodePage.vue'
 
@@ -29,8 +32,11 @@ const routes = [
       { path: 'report', component: reportPage, name:"Report"  },
       { path: 'listTeacher', beforeEnter: checkAdminRights, component: listTeacher, name:"List Teacher"  },
       { path: 'listStudent', beforeEnter: checkAdminRights, component: listStudent, name:"List Student"  },
-      { path: 'teacherdetail/:nign', beforeEnter: checkAdminRights, component: teacherdetail, name:"Report Teacher",props: true   },
+      { path: 'listEmployee', beforeEnter: checkAdminRights, component: listEmployee, name:"List Employee"  },
+      { path: 'adminSetting', beforeEnter: checkAdminRights, component: adminSetting, name:"Admin Setting"  },
+      { path: 'teacherdetail/:nourut', beforeEnter: checkAdminRights, component: teacherdetail, name:"Report Teacher",props: true   },
       { path: 'studentdetail/:nisn', beforeEnter: checkAdminRights, component: studentdetail, name:"Report Student",props: true   },
+      { path: 'employeedetail/:nourut', beforeEnter: checkAdminRights, component: employeedetail, name:"Report Employee",props: true   },
       { path: 'qrCode', beforeEnter: checkAdminRights, component: qrCode, name:"List Qrcode"  },
 
       { path: 'profile',  name: "profile", component: profilePage },

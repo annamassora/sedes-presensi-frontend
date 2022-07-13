@@ -6,7 +6,7 @@
                 <v-img src="@/assets/sedeslogo.png" alt="Fedorae Education Log" contain height="200"></v-img>
               <v-card-text>
                 <v-form>
-                  <v-text-field label="NISN or NIGN" name="indentifier" v-model="user.username" prepend-inner-icon="mdi-email" type="email" class="rounded-0" outlined></v-text-field>
+                  <v-text-field label="NISN or No Urut" name="indentifier" v-model="user.username" prepend-inner-icon="mdi-email" type="email" class="rounded-0" outlined></v-text-field>
                   <v-text-field label="Enter your password" name="password"  v-model="user.password" prepend-inner-icon="mdi-lock" type="password" class="rounded-0" outlined></v-text-field>
                   <v-btn class="rounded-0" @click="handleLogin" :disabled="loading" x-large block dark>Login</v-btn>                 
                 </v-form>
@@ -69,7 +69,7 @@ export default {
           else{
             this.$swal(
             { title: 'Error!',
-              text: 'NISN/NIGN atau pasword tidak cocok',
+              text: 'NISN/No Urut atau pasword tidak cocok',
               icon: 'error',
               confirmButtonText: 'ok'
             })

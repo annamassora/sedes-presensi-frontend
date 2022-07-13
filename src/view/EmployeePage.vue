@@ -80,16 +80,15 @@
             Nama Lengkap
           </th>
           <th class="text-left">
-            NISN
-          </th>
-          <th class="text-left">
+            No Urut
+          </th><th class="text-left">
             Tanggal Lahir
           </th>
           <th class="text-left">
-            Kelas
+            Jabatan
           </th>
           <th class="text-left">
-          Action
+            Action
           </th>
         </tr>
       </thead>
@@ -97,13 +96,11 @@
         <tr
           v-for="(item, index) in tableListsFiltered"
           :key="item.name"
-         
         >
           <td>
              <v-checkbox v-if="selectAll==false"
                 v-model="deleteLists"
-                :value="item.nisn"
-                
+                :value="item.nourut"
                 hide-details
               ></v-checkbox>
               <v-checkbox v-else
@@ -114,14 +111,14 @@
           </td>        
           <td>{{ index+1 }}</td>
           <td>{{ item.fullname }}</td>
-          <td>{{ item.nisn }}</td>
+          <td>{{ item.nourut }}</td>
           <td>{{ item.datebirth }}</td>
           <td >
             <div  v-if="item.isEditing" >
             <v-row>
               <v-col style="align-self:center">
                 <v-text-field
-                  v-model="updateClassString"
+                  v-model="updateTitleString"
                   density="compact" 
                   variant="outlined" 
                   hide-details>
@@ -132,7 +129,7 @@
                   variant="text"
                   color="purple-darken-2"
                   icon="mdi-check"
-                  @click="updateStudent(item.nisn); item.isEditing=false;">
+                  @click="updateEmployee(item.nourut); item.isEditing=false;">
                 </v-btn>
                 <v-btn
                   variant="text"
@@ -145,13 +142,13 @@
               
             </div>
             <div v-else>
-              {{ item.id_class }}
+              {{ item.title }}
               <v-btn 
               variant="text"
               color="purple-darken-2"
               icon="mdi-circle-edit-outline"
               :disabled="isEditing"
-              @click="item.isEditing=true; isEditing=true; updateClassString=item.id_class;">
+              @click="item.isEditing=true; isEditing=true; updateTitleString=item.title;">
               </v-btn>
             </div>
           </td>
@@ -169,13 +166,13 @@
       </tbody>
       </v-table>
     </v-container>
-    <AddStudent :showModal="showModal" ></AddStudent>     
-    <AddStudentCsv :showModal="showUploadModal" ></AddStudentCsv>     
+    <AddEmployee :showModal="showModal" ></AddEmployee>     
+    <AddEmployeeCsv :showModal="showUploadModal" ></AddEmployeeCsv>     
 </template>
 <script>
 import RequestService from '../service/request.service';
-import AddStudent from '@/components/addStudent.vue';
-import AddStudentCsv from '@/components/uploadStudentCsv.vue';
+import AddEmployee from '@/components/addEmployee.vue';
+import AddEmployeeCsv from '@/components/uploadEmployeeCsv.vue';
   export default {
     data: () => ({
         filter: "",
@@ -183,25 +180,25 @@ import AddStudentCsv from '@/components/uploadStudentCsv.vue';
         tableLists: [],
         isEditing:false,
         deleteLists: [],
-        updateClassString:"",
+        updateTitleString:"",
         dialog: false,
         showModal: false,
         selectAll:false,
         showUploadModal: false,
     }),
     created() {
-        console.log("RequestService.studentlist()");
-        RequestService.studentlist(this.fullname, this.nisn).then(result => this.tableLists = result.list);
+        console.log("RequestService.employeelist()");
+        RequestService.employeelist(this.fullname, this.nourut).then(result => this.tableLists = result.list);
         this.tableLists.map(v => ({...v, isEditing: false}))
         console.log("list", this.tableLists);
     },
     methods: {
-        updateStudent(idSiswa) {
-        console.log("Edit for "+idSiswa+" with value "+this.updateClassString)
-        RequestService.updateStudent(idSiswa, this.updateClassString).then(result => {
+      updateEmployee(idGuru) {
+        console.log("Edit for "+idGuru+" with value "+this.updateTitleString)
+        RequestService.updateEmployee(idGuru, this.updateTitleString).then(result => {
         if(result.status==200)
         {
-            RequestService.studentlist(["all"]).then(list => this.tableLists = list.list)
+            RequestService.employeelist(["all"]).then(list => this.tableLists = list.list)
             this.isEditing=false
             this.tableLists.map(v => ({...v, isEditing: false}))
         }
@@ -210,10 +207,14 @@ import AddStudentCsv from '@/components/uploadStudentCsv.vue';
         }
         })
       },
-        handleClick(item) {
-            console.log(item);
-            this.$router.push(`/main/studentdetail/${item.nisn}`);
-        },
+      handleClick(item) {
+          console.log(item);
+          this.$router.push(`/main/employeedetail/${item.nourut}`);
+      },
+      editClick(item) {
+          console.log(item);
+          this.$router.push(`/main/employeedetail/${item.nourut}`);
+      },
 
       openModal(){
           this.showModal = true
@@ -221,7 +222,7 @@ import AddStudentCsv from '@/components/uploadStudentCsv.vue';
 
       closeModal(){
           this.showModal = false
-          RequestService.studentlist(this.fullname, this.nisn, this.id_class).then(result => this.tableLists = result.list);
+          RequestService.employeelist(this.fullname, this.nourut).then(result => this.tableLists = result.list);
           
       },
 
@@ -231,17 +232,17 @@ import AddStudentCsv from '@/components/uploadStudentCsv.vue';
 
       closeUploadModal(){
           this.showUploadModal = false
-          RequestService.studentlist(this.fullname, this.nisn, this.id_class).then(result => this.tableLists = result.list);
+          RequestService.employeelist(this.fullname, this.nourut).then(result => this.tableLists = result.list);
           
       },
       downloadReport(){
-          RequestService.downloadStudentReport().then(result => 
+          RequestService.downloadEmployeeReport().then(result => 
           {console.log(result);
  
           const anchor = document.createElement('a');
           anchor.href = 'data:text/csv;charset=utf-8,' + encodeURIComponent(result);
           anchor.target = '_blank';
-          anchor.download = 'studentReport.csv';
+          anchor.download = 'employeeReport.csv';
           anchor.click();
           });
         },
@@ -260,18 +261,18 @@ import AddStudentCsv from '@/components/uploadStudentCsv.vue';
             showLoaderOnConfirm: true,
           }).then((result) => {
            if(result.value) {
-              RequestService.deleteStudent(["all"]).then((res)=>{
+              RequestService.deleteEmployee(["all"]).then((res)=>{
                 console.log("res :", res)
                 if(res.status==200)
                 {
-                   RequestService.studentlist(["all"]).then(list => this.tableLists = list.list)
+                   RequestService.employeelist(["all"]).then(list => this.tableLists = list.list)
                    this.$swal('Delete', 'Data Berhasil dihapus', 'success')
                 }
                 else{
                    this.$swal('Hapus data gagal', 'Silahkan coba lagi', 'error')
                 }
                 })
-              console.log("RequestService.deleteStudent", result)
+              console.log("RequestService.deleteEmployee", result)
             } else {
               this.$swal('Cancelled', 'Data tidak dihapus', 'info')
             }
@@ -292,18 +293,18 @@ import AddStudentCsv from '@/components/uploadStudentCsv.vue';
             showLoaderOnConfirm: true,
           }).then((result) => {
            if(result.value) {
-              RequestService.deleteStudent(this.deleteLists).then((res)=>{
+              RequestService.deleteEmployee(this.deleteLists).then((res)=>{
                 console.log("res :", res)
                 if(res.status==200)
                 {
-                   RequestService.studentlist(this.deleteLists).then(list => this.tableLists = list.list)
+                   RequestService.employeelist(this.deleteLists).then(list => this.tableLists = list.list)
                    this.$swal('Delete', 'Data Berhasil dihapus', 'success')
                 }
                 else{
                    this.$swal('Hapus data gagal', 'Silahkan coba lagi', 'error')
                 }
                 })
-              console.log("RequestService.deleteStudent", result)
+              console.log("RequestService.deleteEmployee", result)
             } else {
               this.$swal('Cancelled', 'Data tidak dihapus', 'info')
             }
@@ -319,7 +320,7 @@ import AddStudentCsv from '@/components/uploadStudentCsv.vue';
 
               if (this.tableLists != []) {
                   newArray = this.tableLists.filter((tableList) => {
-                      return tableList.fullname.toLocaleLowerCase().includes(this.filter.toLocaleLowerCase())|| tableList.nisn.toLocaleLowerCase().includes(this.filter.toLocaleLowerCase());
+                      return tableList.fullname.toLocaleLowerCase().includes(this.filter.toLocaleLowerCase())|| tableList.nourut.toLocaleLowerCase().includes(this.filter.toLocaleLowerCase());
                   });
                   return newArray
               }
@@ -333,6 +334,6 @@ import AddStudentCsv from '@/components/uploadStudentCsv.vue';
         },
     },
     
-    components: { AddStudent, AddStudentCsv }
+    components: { AddEmployee, AddEmployeeCsv }
 }
 </script>
