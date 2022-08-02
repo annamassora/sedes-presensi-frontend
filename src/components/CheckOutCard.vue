@@ -13,6 +13,7 @@
                   {{location}}
                 </div>
                 <div class="text-caption">{{datetime}}</div>
+                <div v-if="keterlambatan!=''&&parseInt(keterlambatan)>0" class="text-caption">Terlambat: {{waktuKeterlambatan}} </div>
               </div>
             </v-card-header>
     
@@ -29,6 +30,7 @@ export default {
     props: {
     location: String,
     datetime: String,
+    keterlambatan:String,
     id: Number
   },
   methods:
@@ -63,6 +65,28 @@ export default {
             this.$swal('Cancelled', 'Anda masih memiliki akses di area sekolah', 'info')
           }
         })
+    }
+  },
+  computed:{
+    waktuKeterlambatan()
+    {
+      var decimalTimeString = this.keterlambatan;
+      var decimalTime = parseFloat(decimalTimeString);
+      decimalTime = decimalTime * 60 * 60;
+      var hours = Math.floor((decimalTime / (60 * 60)));
+      decimalTime = decimalTime - (hours * 60 * 60);
+      var minutes = Math.floor((decimalTime / 60));
+      decimalTime = decimalTime - (minutes * 60);
+      // var seconds = Math.round(decimalTime);
+      // if(hours < 10)
+      // {
+      //   hours = "" + hours;
+      // }
+      // if(minutes < 10)
+      // {
+      // 	minutes = "0" + minutes;
+      // }
+      return hours+" jam "+minutes+" menit"
     }
   }
   // props

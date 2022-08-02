@@ -46,7 +46,8 @@ const routes = [
     ],},
 ];
 function checkAdminRights(to, from, next) {
-  const isAdmin = JSON.parse(localStorage.getItem('user')).user.role==2;
+  const userRole=JSON.parse(localStorage.getItem('user')).user.role;
+  const isAdmin = userRole==2||userRole==4;
   if(isAdmin)
   {
     console.log("isAdmin",isAdmin)

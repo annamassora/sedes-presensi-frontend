@@ -20,6 +20,9 @@
             <th class="text-left">
               Check-Out
             </th>
+            <th v-if="user.role==3" class="text-left">
+              Lembur
+            </th>
           </tr>
         </thead>
         <tbody>
@@ -31,6 +34,7 @@
             <!-- <td>{{ item.temperature }}</td> -->
             <td>{{ item.location }}</td>
             <td>{{ item.check_out }}</td>
+            <td v-if="user.role==3">{{ item.lembur }}</td>
           </tr>
         </tbody>
     </v-table>
@@ -44,6 +48,7 @@
   export default {
     data () {
       return {
+        user : null,
         attend: [
         ],
         month : ref({ 
@@ -63,6 +68,7 @@
     },
     created ()  {
       console.log("RequestService.report()")
+      this.user= JSON.parse(localStorage.getItem('user')).user;
       RequestService.report(this.month.year, this.month.month).then(result => this.attend = result.attendance)
       console.log("attend",this.attend)
     },

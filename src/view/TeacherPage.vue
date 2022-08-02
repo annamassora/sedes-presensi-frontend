@@ -19,16 +19,6 @@
                 color="error"
                 @click="removeRow()"
               ></v-btn>
-              <v-tooltip
-                bottom
-              >
-                <template v-slot:activator="{ on }">
-                  <v-icon v-on="on" size="large">
-                   mdi-magnify
-                  </v-icon>
-                </template>
-                I'm a tooltip
-              </v-tooltip>
             </template>
             <template v-slot:append>
             <div>

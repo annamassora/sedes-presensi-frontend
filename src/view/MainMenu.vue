@@ -6,7 +6,8 @@
       <NavbarStudent @toogle-drawer="toogleDrawer"  v-if="user.role==1" :displayMobile="displayMobile" :drawer="drawer" :user="user"></NavbarStudent>
       <NavbarTeacher @toogle-drawer="toogleDrawer"  v-else-if="user.role==0" :displayMobile="displayMobile" :drawer="drawer" :user="user"></NavbarTeacher>
       <NavbarEmployee @toogle-drawer="toogleDrawer"  v-else-if="user.role==3" :displayMobile="displayMobile" :drawer="drawer" :user="user"></NavbarEmployee>
-      <NavbarAdmin @toogle-drawer="toogleDrawer"  v-else :displayMobile="displayMobile" :drawer="drawer" :user="user"></NavbarAdmin>
+      <NavbarAdmin @toogle-drawer="toogleDrawer"  v-else-if="user.role==2" :displayMobile="displayMobile" :drawer="drawer" :user="user"></NavbarAdmin>
+      <NavbarKepsek @toogle-drawer="toogleDrawer"  v-else :displayMobile="displayMobile" :drawer="drawer" :user="user"></NavbarKepsek>
       <v-main >
         <router-view></router-view>
       </v-main>
@@ -21,6 +22,7 @@ import { useDisplay } from 'vuetify'
 import NavbarTeacher from '@/components/NavbarTeacher.vue'
 import NavbarEmployee from '@/components/NavbarEmployee.vue'
 import NavbarAdmin from '@/components/NavbarAdmin.vue'
+import NavbarKepsek from '@/components/NavbarKepsek.vue'
 export default {
   data() {
     return {
@@ -40,7 +42,8 @@ export default {
     NavbarStudent,
     NavbarTeacher,
     NavbarAdmin,
-    NavbarEmployee
+    NavbarEmployee,
+    NavbarKepsek
 },  
 methods:{
   toogleDrawer()

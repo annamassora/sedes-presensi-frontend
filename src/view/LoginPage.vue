@@ -63,6 +63,17 @@ export default {
               this.$router.replace("/main");
               console.log(localStorage.getItem('user'));
               this.loading = false;
+            }if(response.access.user.role==3)
+            {
+              this.$router.replace("/main");
+              console.log(localStorage.getItem('user'));
+              this.loading = false;
+            }
+            if(response.access.user.role==4)
+            {
+              this.$router.replace("/main");
+              console.log(localStorage.getItem('user'));
+              this.loading = false;
             }
             
           }

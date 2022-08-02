@@ -15,7 +15,7 @@
 
 <script>
 import { QrcodeStream} from 'qrcode-reader-vue3'
-// import RequestService from '../service/request.service';
+import RequestService from '../service/request.service';
 export default {
   data() {
     return {
@@ -33,20 +33,26 @@ export default {
     onDecode (decodedString) 
     {
       this.qrString = decodedString
-
+      RequestService.attendance(this.qrString).then((result)=>{
+        if(result.status==200)
+        {
             console.log("decodedString :", decodedString);
             this.$router.replace("/main");
             this.$swal.fire({
-            position: 'top-end',
-            icon: 'success',
-            title: 'Berhasil Check-in',
-            showConfirmButton: false,
-            closeOnClickOutside: false,
-            allowOutsideClick: false,
-            allowEscapeKey: false,
-            timer: 1500
-            });
-        console.log("decodedString :", decodedString)
+                position: 'top-end',
+                icon: 'success',
+                title: 'Berhasil Check-in',
+                showConfirmButton: false,
+                closeOnClickOutside: false,
+                allowOutsideClick: false,
+                allowEscapeKey: false,
+                timer: 1500
+            })
+        }
+      else{
+            this.$swal('QRCode Salah', 'Silahkan coba lagi', 'error')
+      }})
+      console.log("decodedString :", decodedString)
       
     },
     async onInit (promise) {

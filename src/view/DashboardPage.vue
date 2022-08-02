@@ -1,5 +1,5 @@
 <template>
-<div v-if="user.role==2">
+<div v-if="user.role==2||user.role==4">
   <BarChart  :displayMobile="displayMobile" :drawer="drawer" :user="user"></BarChart>
 </div>
 <div v-else>
@@ -52,7 +52,7 @@
         <v-subheader key="Last Check-in" inset>Last Check-in</v-subheader>
         <v-divider key="1" inset></v-divider>
         <div  v-for="dataCard in dataCards" :key="dataCard.id">
-          <CheckOutCard :location="dataCard.location" :datetime="dataCard.check_in" :id="dataCard.id"></CheckOutCard>
+          <CheckOutCard :location="dataCard.location" :datetime="dataCard.check_in" :id="dataCard.id" :keterlambatan="dataCard.keterlambatan"></CheckOutCard>
         </div>
     </div>
 </div>
