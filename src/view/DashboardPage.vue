@@ -1,8 +1,13 @@
 <template>
-<div v-if="user.role==2||user.role==4">
-  <BarChart  :displayMobile="displayMobile" :drawer="drawer" :user="user"></BarChart>
+<div v-if="user.role==2||user.role==4" :style="background">
+  <v-img src="@/assets/web_sedes.png" 
+    alt="Fedorae Education Log" 
+    contain height= center
+    ></v-img>
+  <!-- <BarChart  :displayMobile="displayMobile" :drawer="drawer" :user="user"></BarChart> -->
 </div>
 <div v-else>
+    
     <v-container  style="">
       <!-- <Carousel :autoplay="6000" :wrap-around="true">
         <Slide v-for="slide in 5"  :key="slide">
@@ -55,11 +60,12 @@
           <CheckOutCard :location="dataCard.location" :datetime="dataCard.check_in" :id="dataCard.id" :keterlambatan="dataCard.keterlambatan"></CheckOutCard>
         </div>
     </div>
+    
 </div>
 </template>
 
 <script>
-import BarChart from '../components/BarChart.vue'
+// import BarChart from '../components/BarChart.vue'
 import CheckOutCard from '../components/CheckOutCard.vue'
 import RequestService from '../service/request.service'
 import 'vue3-carousel/dist/carousel.css';
@@ -73,7 +79,6 @@ export default {
       drawer: true,
       displayMobile:null,
       user : null,
-      
       
     }
   },
@@ -92,11 +97,18 @@ export default {
     // Carousel,
     // Slide,
     CheckOutCard,
-    BarChart,
+    // BarChart,
 },
   props: {
   },
   methods: {
+},
+computed: {
+  backGround() {
+    return {
+      backgroundImage: `url${require('@/assets/web_sedes.png')}`
+    };
+  }
 },
   async mounted() {
   }
