@@ -25,7 +25,7 @@
         </template>
         <v-list nav>
             <v-list-item prepend-icon="mdi-home-city" title="Dashboard" value="Dashboard" @click="this.$router.push('/main')"></v-list-item>
-            <v-list-item prepend-icon="mdi-account-details" title="Teacher" value="teacherAccount" @click="this.$router.push('/main/listTeacher')"></v-list-item>
+            <v-list-item prepend-icon="mdi-bookshelf" title="Teacher" value="teacherAccount" @click="this.$router.push('/main/listTeacher')"></v-list-item>
         </v-list>
         <template #append>
             <v-list nav>
@@ -59,7 +59,7 @@
         </template>
         <v-list nav>
             <v-list-item prepend-icon="mdi-home-city" title="Dashboard" value="Dashboard" @click="this.$router.push('/main')"></v-list-item>
-            <v-list-item prepend-icon="mdi-account-details" title="Teacher" value="teacherAccount" @click="this.$router.push('/main/listTeacher')"></v-list-item>
+            <v-list-item prepend-icon="mdi-bookshelf" title="Teacher" value="teacherAccount" @click="this.$router.push('/main/listTeacher')"></v-list-item>
         </v-list>
         <template #append>
             <v-list nav>

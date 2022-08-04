@@ -28,8 +28,8 @@
             <v-list-item prepend-icon="mdi-bookshelf" title="Teacher" value="teacherAccount" @click="this.$router.push('/main/listTeacher')"></v-list-item>
             <v-list-item prepend-icon="mdi-bookshelf" title="Student" value="studentAccount" @click="this.$router.push('/main/listStudent')"></v-list-item>
             <v-list-item prepend-icon="mdi-bookshelf" title="Employee" value="employeeAccount" @click="this.$router.push('/main/listEmployee')"></v-list-item>
-            <v-list-item prepend-icon="mdi-cog" title="Setting" value="settingAccount" @click="this.$router.push('/main/adminSetting')"></v-list-item>
             <v-list-item prepend-icon="mdi-checkbox-intermediate" title="QRCode" value="qrcode" @click="this.$router.push('/main/qrCode')"></v-list-item>
+            <v-list-item prepend-icon="mdi-cog" title="Setting" value="settingAccount" @click="this.$router.push('/main/adminSetting')"></v-list-item>
         </v-list>
         <template #append>
             <v-list nav>
