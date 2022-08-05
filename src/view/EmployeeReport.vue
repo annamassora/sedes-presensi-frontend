@@ -27,6 +27,9 @@
             <th class="text-left">
               Check-Out
             </th>
+            <th class="text-left">
+              Lembur
+            </th>
           </tr>
         </thead>
         <tbody>
@@ -38,6 +41,7 @@
             <!-- <td>{{ item.temperature }}</td> -->
             <td>{{ item.location }}</td>
             <td>{{ item.check_out }}</td>
+            <td>{{ item.lembur }}</td>
           </tr>
         </tbody>
     </v-table>

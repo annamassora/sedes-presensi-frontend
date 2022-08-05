@@ -12,7 +12,7 @@
           >
             <template v-slot:prepend>
               <v-btn
-                v-if="deleteLists.length>0||selectAll"
+                v-if="user.role==2&&(deleteLists.length>0||selectAll)"
                 class="ma-2"
                 size="small"
                 icon="mdi-delete"
@@ -23,6 +23,7 @@
             <template v-slot:append>
             <div>
                 <v-btn 
+                  v-if="user.role==2"
                   class="ma-2"
                   size="small"
                   color="yellow"
@@ -30,6 +31,7 @@
                   @click="openModal">                  
                 </v-btn>
                 <v-btn 
+                  v-if="user.role==2"
                   class="ma-2"
                   size="small"
                   color="yellow"
@@ -37,6 +39,7 @@
                   @click="openUploadModal">
                 </v-btn>  
                 <v-btn 
+                  v-if="user.role==2"
                   color="yellow" 
                   size="small"
                   class="ml-2" 
@@ -53,7 +56,7 @@
       <v-table>
       <thead>
         <tr>
-          <th class="text-left">
+          <th v-if="user.role==2" class="text-left">
             <div>
               <v-checkbox
                 v-model="selectAll"
@@ -87,7 +90,7 @@
           v-for="(item, index) in tableListsFiltered"
           :key="item.name"
         >
-          <td>
+          <td v-if="user.role==2">
              <v-checkbox v-if="selectAll==false"
                 v-model="deleteLists"
                 :value="item.nourut"
@@ -134,6 +137,7 @@
             <div v-else>
               {{ item.title }}
               <v-btn 
+              v-if="user.role==3"
               variant="text"
               color="purple-darken-2"
               icon="mdi-circle-edit-outline"
@@ -175,9 +179,11 @@ import AddTeacherCsv from '@/components/uploadTeacherCsv.vue';
         showModal: false,
         selectAll:false,
         showUploadModal: false,
+        user : null,
     }),
     created() {
-        console.log("RequestService.teacherlist()");
+        this.user= JSON.parse(localStorage.getItem('user')).user;
+        console.log("RequestService.teacherlist()", this.user);
         RequestService.teacherlist(this.fullname, this.nourut).then(result => this.tableLists = result.list);
         this.tableLists.map(v => ({...v, isEditing: false}))
         console.log("list", this.tableLists);

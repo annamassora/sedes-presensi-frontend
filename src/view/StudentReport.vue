@@ -65,7 +65,7 @@
     created ()  {
       console.log("RequestService.studentdetail()")
       RequestService.studentdetail(this.nisn, this.month.year, this.month.month).then(result => this.attend = result.attendance)
-      console.log("attend",this.attend)
+      console.log("studentattend",this.attend)
     },
     computed : {
       sorted_attendance(){
